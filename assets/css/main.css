@@ -1668,3 +1668,10 @@ input, select, textarea {
 			height: auto;
 			padding: 20px 0; /* Adjust the padding as needed */
 		}
+
+		#profile-image {
+			border: 3px solid white; /* Thin white outline */
+			padding: 4px;            /* Gap between the image and the outline */
+			display: inline-block;   /* Ensures the padding and border are applied properly */
+			margin: 4px;
+		}
