@@ -1675,3 +1675,15 @@ input, select, textarea {
 			display: inline-block;   /* Ensures the padding and border are applied properly */
 			margin: 4px;
 		}
+
+		.button-container {
+			display: flex;
+			justify-content: space-between; /* Aligns the first button to the left and the last button to the right */
+			width: 100%; /* Makes sure the container takes the full width of its parent */
+			padding: 0; /* Removes any default padding */
+		}
+		
+		.button-container .button {
+			margin: 0; /* Removes any default margin */
+		}
+		
