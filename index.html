@@ -35,8 +35,7 @@
 								<li><a href="#intro">Intro</a></li>
 								<li><a href="#work">Experience</a></li>
 								<li><a href="#about">Projects</a></li>
-								<li><a href="downloads/GT Resume.pdf" download="GT Resume.pdf">Resume</a></li>
-								<li><a href="#contact">Contact</a></li>
+								<li><a href="#contact">Resume</a></li>
 								<!--<li><a href="#elements">Elements</a></li>-->
 							</ul>
 						</nav>
@@ -47,9 +46,25 @@
 
 						<!-- Intro -->
 							<article id="intro">
-								<h2 class="major">Intro</h2>
+								<h2 class="major">About me</h2>
 								<span class="image main"><img src="images/thegang.jpg" alt="" /></span>
-								<p>An aspiring student from Georgia Tech willing to improve his endeavors in all realms. Be it the physical realm of combat competing against monstrous athletes' or learning the intricate world of technology and engineering, the endless amount of potential is always unraveling till the end. My academic journey reflects a strong foundation in Computer Engineering, with significant project experience in robotics through my involvement with RoboNAV. Alongside my technical pursuits, I am deeply committed to my Islamic faith, serving as the Content Director and Technical Editor at the Najam Institute, where I focus on community upliftment through innovative solutions. My career trajectory is driven by a passion for technology and a dedication to making impactful contributions in dynamic environments.</p>
+								<p>An aspiring student from Georgia Tech willing to improve his endeavors in all realms. Be it the physical realm of combat competing against monstrous athletes' or learning the intricate world of technology and engineering, the endless amount of potential is always unraveling till the end. 
+
+								</p>
+
+
+								<p>
+									My work blends embedded systems, machine learning, and software engineering with a focus on real-world impact. 
+									
+									<br><br>As the founder of <b>Strike</b>, I developed a smart boxing tracker that captures real-time performance data using embedded sensors and Bluetooth connectivity, enabling safer and more informed training for athletes.
+									
+									Through my research with the <b>Structured Information for Precision Neuroengineering Lab </b>, I contributed to human-in-the-loop AI systems by designing web-based interfaces that streamline data collection for sentiment analysis and natural language tasks. This experience sharpened my understanding of human-centered machine learning and scalable experiment design.
+									
+								
+									<br>At the <b>Najam Institute</b>, I also apply my technical skills to community development, serving as a Content Director and Technical Editor focused on Islamic education and outreach.
+									
+									Every experience has reinforced my belief that technology is most powerful when it improves lives — and that's the mission that drives me.
+								</p>
 							</article>
 
 						<!-- Work -->
@@ -61,14 +76,25 @@
 								<h2 class="major">Experience</h2>
 								<span class="image main"><img src="images/createx.png" alt="" /></span>
 								<label for="demo-name">Founder and Lead Developer for STRIKE Create-X Start Up <br>
-								August 2024 - Present
+								August 2024 - December 2024
 								</br></label>
 								<p>Developed a smart boxing tracking device that measures key metrics like power, speed, and force, and transmits data in real-time via Bluetooth to a smartphone app. Enhanced the accuracy of impact measurements up to 109 Pa through refined product testing, ensuring both device durability and user comfort. Led product launch and marketing efforts, positioning the device as a valuable tool for professional training in boxing gyms, while also promoting its appeal to individual fitness enthusiasts looking to improve their performance.</p>
+								
+								<span class="image main"><img src="images/SiP Lab.png" alt="" /></span>
+								<label for="demo-name">ML/AI Research Assistant<br>
+								January 2025 - Present
+								</br></label>
+								<p>Designed and deployed a web-based experimental interface to collect user responses for sentiment classification tasks, enabling high-quality data labeling at scale. Integrated with the Prolific platform to streamline participant flow and manage over 100 contributors efficiently. Contributed to active learning strategies that reduced human input without sacrificing model accuracy, enhancing the system’s ability to learn from minimal supervision and improving overall annotation speed.</p>
+								
+								
 								<span class="image main"><img src="images/omomilogo.png" alt="" /></span>
 								<label for="demo-name">Data Analyst Intern for OMOMI Industries <br>
 								October 2023 - December 2023
 								</br></label>
 								<p>During my internship as an Analyst Lead for RTC Information Systems at OMOMI Industries / OLTS, I enhanced operational efficiency and supported strategic decision-making by coordinating transportation logistics, analyzing data, and generating optimization reports, which improved delivery times and reduced costs.</p>
+								
+								
+								
 								<span class="image main"><img src="images/vip.png" alt="" /></span>
 								<label for="demo-name">Vertically Integrated Project Researcher<br>
 								August 2024 - Present</br></label>
@@ -78,6 +104,11 @@
 						<!-- Projects(Using about id) -->
 							<article id="about">
 								<h2 class="major">Projects</h2>
+								
+								<span class="image main"><img src="images/telecontrol glove.png" alt="" /></span>
+								<label for="demo-name">Robotic Telecontrol Glove</label>
+								<p>Developed an embedded telecontrol glove system using C++, Arduino, and an ESP-32 to enable real-time VR interaction with a 3D-printed robotic hand. Finger motion was measured via five potentiometers linked by tension strings, calibrated through a custom-built button interface for precise tracking. Integrated tactile feedback by mapping five feedback buttons on the robotic hand to corresponding servos on the glove, simulating the sensation of physical contact. The system created an immersive, bidirectional control loop with potential applications in assistive tech, robotics, and virtual environments.</p>
+								
 
 								<span class="image main"><img src="images/aichatbot.png" alt="" /></span>
 								<label for="demo-name">Crescent Cloud AI Support Chatbot</label>
@@ -87,13 +118,26 @@
 									<li><a href="https://www.youtube.com/watch?v=6-iw19WuD4Q" class="button primary icon solid">Video DEMO</a></li>
 									<!--<li><a href="https://crescent-chatbot.kamrultarafder.me/" class="button primary icon solid">Project DEMO</a></li> -->
 								</ul>
+
+								<span class="image main"><img src="images/RISCV.png" alt="" /></span>
+								<label for="demo-name">RISC-V Processor Design</label>
+								<p>Designed and implemented a five-stage pipelined RISC-V processor in SystemVerilog, supporting instruction-level parallelism and modular microarchitecture. Boosted execution throughput by 6.44× through hazard mitigation techniques such as pipeline stalling, data forwarding, and branch prediction. Validated design correctness using ModelSim, performing detailed waveform analysis, timing verification, and register tracking to ensure accurate instruction flow and reliable processor performance.</p>
 								
+								<span class="image main"><img src="images/servomachines.png" alt="" /></span>
+								<label for="demo-name">Servo FPGA Peripheral Design</label>
+								<p>Designed and implemented an FPGA-based servo controller using VHDL and Assembly to drive five independent servos concurrently, increasing hardware scalability by 400%. Developed precise timing logic and documented system architecture, including signal constraints and interfacing methodology. Addressed challenges in concurrent control and synchronization, ensuring reliable pulse-width modulation and consistent servo behavior under real-time conditions.</p>
+
 								<span class="image main"><img src="images/jetshooter.png" alt="" /></span>
 								<label for="demo-name">Jet Fire Shooter mBed System Project</label>
-								<p>Project involved developing a fully interactive game on a custom-built embedded system, utilizing C programming and advanced data structures like a double linked list for efficient memory management</p>
+								<p>Engineered a real-time space shooter game using C on a custom Arduino-based embedded platform, featuring dynamic UI elements and event-driven input for an interactive user experience. Focused on optimizing system performance by restructuring the game loop with memory-efficient data handling and loop unrolling, resulting in a 50% reduction in execution latency. The project demonstrated embedded-level game logic execution and responsive hardware integration under tight timing constraints.</p>
 								<ul class="actions">
 									<li><a href="https://www.youtube.com/watch?v=0D1zUwdujvA&ab_channel=vientran" class="button primary icon solid">Video DEMO</a></li>
 								</ul>
+
+								<span class="image main"><img src="images/pantry.png" alt="" /></span>
+								<label for="demo-name">Smart Inventory Pantry Tracker</label>
+								<p>Developed a responsive web application to track pantry inventory in real time, enabling users to monitor food supplies, log usage, and receive stock alerts. Implemented Firebase for backend data storage, real-time database sync, and user authentication, ensuring seamless access across devices. Deployed the full-stack app using GitHub Pages, integrating version control, CI/CD, and collaborative development workflows. Designed intuitive UI components to enhance usability and encourage sustainable household management.</p>
+								
 								<span class="image main"><img src="images/dnaproject.png" alt="" /></span>
 								<label for="demo-name">Assembly DNA Binary Search</label>
 								<p>Developed a comprehensive MIPS project that performs a binary search on DNA sequences, focusing on efficiency by reducing the dynamic instruction count by 50% and minimizing the static instruction count by 41%.</p>
@@ -101,39 +145,34 @@
 
 						<!-- Contact -->
 							<article id="contact">
-								<h2 class="major">Contact</h2>
+								<h2 class="major">Resume</h2>
 								<form method="post" action="#">
-									<div class="fields">
-										<div class="field half">
-											<label for="name">Name</label>
-											<input type="text" name="name" id="name" />
-										</div>
-										<div class="field half">
-											<label for="email">Email</label>
-											<input type="text" name="email" id="email" />
-										</div>
-										<div class="field">
-											<label for="message">Message</label>
-											<textarea name="message" id="message" rows="4"></textarea>
-										</div>
-									</div>
+
 									<ul class="actions">
-										<li><input type="submit" value="Send Message" class="primary" /></li>
-										<li><input type="reset" value="Reset" /></li>
+										<li><a href="downloads/GT Resume CE_EE.pdf.pdf" download="GT Resume CE_EE.pdf" class="button primary icon solid fa-download">Resume CE/EE</a></li>
+										<li><a href="downloads/GT Resume CS (2).pdf.pdf.pdf" download="GT Resume CS(2).pdf" class="button primary icon solid fa-download">Resume CS</a></li>
 									</ul>
+
+						
 								</form>
-								<ul class="icons">
-									<li><a href="https://github.com/VienJunaid" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+								<h2 class="major">Links</h2>
+								<ul class="actions">
+									<li><a href="https://github.com/VienJunaid" class="button primary icon solid fa-download">Github</a></li>
+									<li><a href="https://www.linkedin.com/in/vienlytran/" class="button primary icon solid fa-download">LinkedIn</a></li>
+									
 								</ul>
+
+								<h2 class="major">contacts</h2>
+								<label for=""demo-name">vtran82@gatech.edu</label>
 							</article>
 						
-						<!-- Resume Element -->
+						<!-- Resume Element 
 						<article id=""resume">
 							<ul class="actions">
-								<li><a href="downloads/GT Resume.pdf" download="GT Resume.pdf" class="button primary icon solid fa-download">Resume</a></li>
+								<li><a href="downloads/GT Resume.pdf" download="GT Resume CE_EE.pdf" class="button primary icon solid fa-download">Resume</a></li>
 							</ul>
 						</article>
-						
+					-->
 						
 
 						<!-- Elements -->
@@ -382,7 +421,7 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 
 				<!-- Footer -->
 					<footer id="footer">
-						<p class="copyright">&copy;vienjunaid@gmail.com</p>
+						<p class="copyright">&copy;vtran82@gmail.com</p>
 					</footer>
 
 			</div>
