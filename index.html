@@ -1,440 +1,298 @@
-<!DOCTYPE HTML>
-<!--
-	Dimension by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
-<html>
-	<head>
-		<title>Vien Tran</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/main.css" />
-		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-	</head>
-	<body class="is-preload">
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Vien Tran</title>
+  <meta name="description" content="Vien Tran: embedded systems, machine learning and software engineering. Experience, projects and resume.">
+  <meta name="theme-color" content="#1a1b26">
+  <link rel="preload" href="fonts/JetBrainsMono.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="css/site.css">
+  <!-- Without JavaScript (or if the app fails to start) the pages below are shown as one plain document -->
+  <script>if ('noModule' in HTMLScriptElement.prototype) document.documentElement.classList.add('js')</script>
+  <script type="module" src="js/app.js" onerror="document.documentElement.classList.remove('js')"></script>
+</head>
+<body>
 
-		<!-- cool tool link  <a href="https://html5up.net">HTML5 UP</a> -->
-		<!-- Wrapper -->
-			<div id="wrapper">
+  <!-- The pixel-art scene behind everything (js/scene-view.js) -->
+  <canvas id="scene" aria-hidden="true"></canvas>
 
-				<!-- Header -->
-					<header id="header">
-						<div class="logo">
-							<span class="icon fa-gem"></span>
-						</div>
-						<div class="content">
-							<div class="inner">
-								<h1>Vien Tran</h1>
-								<img src="images/junaidprofessional.png" alt="Your Image" id="profile-image" />
-								<p>A student willing to improve his endeavors in all realms.</p>
-							</div>
-						</div>
-						<nav>
-							<ul>
-								<li><a href="#intro">Intro</a></li>
-								<li><a href="#work">Experience</a></li>
-								<li><a href="#about">Projects</a></li>
-								<li><a href="#contact">Resume</a></li>
-								<!--<li><a href="#elements">Elements</a></li>-->
-							</ul>
-						</nav>
-					</header>
+  <main id="app">
 
-				<!-- Main -->
-					<div id="main">
+    <!-- ============================================================ Home -->
+    <section class="page home active" id="home" aria-label="Home">
+      <div class="widgets">
 
-						<!-- Intro -->
-							<article id="intro">
-								<h2 class="major">About me</h2>
-								<span class="image main"><img src="images/thegang.jpg" alt="" /></span>
-								<p>An aspiring student from Georgia Tech willing to improve his endeavors in all realms. Be it the physical realm of combat competing against monstrous athletes' or learning the intricate world of technology and engineering, the endless amount of potential is always unraveling till the end. 
+        <div class="area top-left needs-js">
+          <!-- Like the dashboard: the clock opens Settings -->
+          <button class="open-settings" id="clock" aria-label="Open settings">
+            <section class="panel">
+              <header><span class="icon">◷</span>Time</header>
+              <div class="time"><pre id="clock-time"></pre><span class="meridiem" id="clock-meridiem"></span></div>
+              <div class="date" id="clock-date"></div>
+              <div class="hijri" id="clock-hijri"></div>
+            </section>
+          </button>
+        </div>
 
-								</p>
+        <div class="area top-center">
+          <div class="verse-stack needs-js" id="verse">
+            <button class="open" id="verse-next" aria-label="Show another verse"></button>
+          </div>
+          <div class="title-wrap" id="home-title">
+            <span class="ornament" aria-hidden="true">۞</span>
+            <h1>Vien Tran</h1>
+            <canvas class="banner" aria-hidden="true"></canvas>
+          </div>
+        </div>
 
+        <div class="area top-right needs-js">
+          <section class="panel salah">
+            <header><span class="icon">☾</span>Salah · <span id="salah-place"></span></header>
+            <ul id="salah"></ul>
+            <p class="countdown" id="salah-countdown"></p>
+          </section>
+        </div>
 
-								<p>
-									My work blends embedded systems, machine learning, and software engineering with a focus on real-world impact. 
-									
-									<br><br>As the founder of <b>Strike</b>, I developed a smart boxing tracker that captures real-time performance data using embedded sensors and Bluetooth connectivity, enabling safer and more informed training for athletes.
-									
-									Through my research with the <b>Structured Information for Precision Neuroengineering Lab </b>, I contributed to human-in-the-loop AI systems by designing web-based interfaces that streamline data collection for sentiment analysis and natural language tasks. This experience sharpened my understanding of human-centered machine learning and scalable experiment design.
-									
-								
-									<br>At the <b>Najam Institute</b>, I also apply my technical skills to community development, serving as a Content Director and Technical Editor focused on Islamic education and outreach.
-									
-									Every experience has reinforced my belief that technology is most powerful when it improves lives — and that's the mission that drives me.
-								</p>
-							</article>
+        <div class="area bottom-left">
+          <section class="panel intro">
+            <header><span class="icon">✦</span>Salaam</header>
+            <div class="who">
+              <img src="images/junaidprofessional.png" alt="Vien Tran" width="300" height="300">
+              <p>A student willing to improve his endeavors in all realms.</p>
+            </div>
+            <ul class="rows">
+              <li><a href="#about"><span class="name">About me</span><span class="dots"></span><span class="go">read ▸</span></a></li>
+              <li><a href="#projects"><span class="name">Projects</span><span class="dots"></span><span class="go">see ▸</span></a></li>
+              <li><a href="#resume"><span class="name">Resume</span><span class="dots"></span><span class="go">get ▸</span></a></li>
+            </ul>
+          </section>
+        </div>
 
-						<!-- Work -->
-							<article id="work">
-								<h2 class="major">Education</h2>
-								
-								<span class="image main"><img src="images/gtbelltower.jpg" alt="" /></span>
-								<label for="demo-name">Georgia Institute of Technology: August 2023 - May 2026</label>
-								<h2 class="major">Experience</h2>
-								<span class="image main"><img src="images/createx.png" alt="" /></span>
-								<label for="demo-name">Founder and Lead Developer for STRIKE Create-X Start Up <br>
-								August 2024 - December 2024
-								</br></label>
-								<p>Developed a smart boxing tracking device that measures key metrics like power, speed, and force, and transmits data in real-time via Bluetooth to a smartphone app. Enhanced the accuracy of impact measurements up to 109 Pa through refined product testing, ensuring both device durability and user comfort. Led product launch and marketing efforts, positioning the device as a valuable tool for professional training in boxing gyms, while also promoting its appeal to individual fitness enthusiasts looking to improve their performance.</p>
-								
-								<span class="image main"><img src="images/SiP Lab.png" alt="" /></span>
-								<label for="demo-name">ML/AI Research Assistant<br>
-								January 2025 - Present
-								</br></label>
-								<p>Designed and deployed a web-based experimental interface to collect user responses for sentiment classification tasks, enabling high-quality data labeling at scale. Integrated with the Prolific platform to streamline participant flow and manage over 100 contributors efficiently. Contributed to active learning strategies that reduced human input without sacrificing model accuracy, enhancing the system’s ability to learn from minimal supervision and improving overall annotation speed.</p>
-								
-								
-								<span class="image main"><img src="images/omomilogo.png" alt="" /></span>
-								<label for="demo-name">Data Analyst Intern for OMOMI Industries <br>
-								October 2023 - December 2023
-								</br></label>
-								<p>During my internship as an Analyst Lead for RTC Information Systems at OMOMI Industries / OLTS, I enhanced operational efficiency and supported strategic decision-making by coordinating transportation logistics, analyzing data, and generating optimization reports, which improved delivery times and reduced costs.</p>
-								
-								
-								
-								<span class="image main"><img src="images/vip.png" alt="" /></span>
-								<label for="demo-name">Vertically Integrated Project Researcher<br>
-								August 2024 - Present</br></label>
-								<p>Refined and optimized hardware for delivery drones capable of picking up and delivering packages on campus. Led troubleshooting and repair of electrical components and circuits, improving the drone's performance, durability, modularity, and reliability. Additionally, contributed to the development of an improved drone carrier design to enhance delivery efficiency. </p>
-							</article>
+      </div>
+    </section>
 
-						<!-- Projects(Using about id) -->
-							<article id="about">
-								<h2 class="major">Projects</h2>
-								
-								<span class="image main"><img src="images/telecontrol glove.png" alt="" /></span>
-								<label for="demo-name">Robotic Telecontrol Glove</label>
-								<p>Developed an embedded telecontrol glove system using C++, Arduino, and an ESP-32 to enable real-time VR interaction with a 3D-printed robotic hand. Finger motion was measured via five potentiometers linked by tension strings, calibrated through a custom-built button interface for precise tracking. Integrated tactile feedback by mapping five feedback buttons on the robotic hand to corresponding servos on the glove, simulating the sensation of physical contact. The system created an immersive, bidirectional control loop with potential applications in assistive tech, robotics, and virtual environments.</p>
-								
+    <!-- ============================================================ About -->
+    <section class="page content" id="about" aria-labelledby="about-title">
+      <header class="page-title">
+        <h2 id="about-title">About</h2>
+        <canvas class="banner" aria-hidden="true"></canvas>
+      </header>
+      <div class="column">
 
-								<span class="image main"><img src="images/aichatbot.png" alt="" /></span>
-								<label for="demo-name">Crescent Cloud AI Support Chatbot</label>
-								<p>The project involves developing an AI chatbot that has progressed through several levels of complexity. Starting with a basic chatbot structure and input handling, the project evolved by integrating OpenAI's GPT-4 model for intelligent responses, deploying the web app on AWS EC2, and optimizing it using AWS Bedrock and RAG (Retrieval-Augmented Generation) for knowledge-based responses. The final implementation leverages various AWS services, Next.js, and Pinecone for efficient data handling and vectorization, resulting in a sophisticated, scalable chatbot capable of intelligent, context-aware interactions.</p>
-								
-								<ul class="actions button-container">
-									<li><a href="https://www.youtube.com/watch?v=6-iw19WuD4Q" class="button primary icon solid">Video DEMO</a></li>
-									<!--<li><a href="https://crescent-chatbot.kamrultarafder.me/" class="button primary icon solid">Project DEMO</a></li> -->
-								</ul>
+        <section class="panel prose">
+          <header><span class="icon">✦</span>About me</header>
+          <img class="shot wide" src="images/thegang.jpg" alt="Vien with friends" width="1600" height="1066" loading="lazy">
+          <p>An aspiring student from Georgia Tech willing to improve his endeavors in all realms. Be it the physical realm of combat competing against monstrous athletes or learning the intricate world of technology and engineering, the endless amount of potential is always unraveling till the end.</p>
+          <p>My work blends embedded systems, machine learning, and software engineering with a focus on real-world impact.</p>
+        </section>
 
-								<span class="image main"><img src="images/RISCV.png" alt="" /></span>
-								<label for="demo-name">RISC-V Processor Design</label>
-								<p>Designed and implemented a five-stage pipelined RISC-V processor in SystemVerilog, supporting instruction-level parallelism and modular microarchitecture. Boosted execution throughput by 6.44× through hazard mitigation techniques such as pipeline stalling, data forwarding, and branch prediction. Validated design correctness using ModelSim, performing detailed waveform analysis, timing verification, and register tracking to ensure accurate instruction flow and reliable processor performance.</p>
-								
-								<span class="image main"><img src="images/servomachines.png" alt="" /></span>
-								<label for="demo-name">Servo FPGA Peripheral Design</label>
-								<p>Designed and implemented an FPGA-based servo controller using VHDL and Assembly to drive five independent servos concurrently, increasing hardware scalability by 400%. Developed precise timing logic and documented system architecture, including signal constraints and interfacing methodology. Addressed challenges in concurrent control and synchronization, ensuring reliable pulse-width modulation and consistent servo behavior under real-time conditions.</p>
+        <section class="panel prose">
+          <header><span class="icon">◆</span>What I do</header>
+          <p>As the founder of <b>Strike</b>, I developed a smart boxing tracker that captures real-time performance data using embedded sensors and Bluetooth connectivity, enabling safer and more informed training for athletes.</p>
+          <p>Through my research with the <b>Structured Information for Precision Neuroengineering Lab</b>, I contributed to human-in-the-loop AI systems by designing web-based interfaces that streamline data collection for sentiment analysis and natural language tasks. This experience sharpened my understanding of human-centered machine learning and scalable experiment design.</p>
+          <p>At the <b>Najam Institute</b>, I also apply my technical skills to community development, serving as a Content Director and Technical Editor focused on Islamic education and outreach.</p>
+          <p>Every experience has reinforced my belief that technology is most powerful when it improves lives — and that's the mission that drives me.</p>
+        </section>
 
-								<span class="image main"><img src="images/jetshooter.png" alt="" /></span>
-								<label for="demo-name">Jet Fire Shooter mBed System Project</label>
-								<p>Engineered a real-time space shooter game using C on a custom Arduino-based embedded platform, featuring dynamic UI elements and event-driven input for an interactive user experience. Focused on optimizing system performance by restructuring the game loop with memory-efficient data handling and loop unrolling, resulting in a 50% reduction in execution latency. The project demonstrated embedded-level game logic execution and responsive hardware integration under tight timing constraints.</p>
-								<ul class="actions">
-									<li><a href="https://www.youtube.com/watch?v=0D1zUwdujvA&ab_channel=vientran" class="button primary icon solid">Video DEMO</a></li>
-								</ul>
+      </div>
+    </section>
 
-								<span class="image main"><img src="images/pantry.png" alt="" /></span>
-								<label for="demo-name">Smart Inventory Pantry Tracker</label>
-								<p>Developed a responsive web application to track pantry inventory in real time, enabling users to monitor food supplies, log usage, and receive stock alerts. Implemented Firebase for backend data storage, real-time database sync, and user authentication, ensuring seamless access across devices. Deployed the full-stack app using GitHub Pages, integrating version control, CI/CD, and collaborative development workflows. Designed intuitive UI components to enhance usability and encourage sustainable household management.</p>
-								
-								<span class="image main"><img src="images/dnaproject.png" alt="" /></span>
-								<label for="demo-name">Assembly DNA Binary Search</label>
-								<p>Developed a comprehensive MIPS project that performs a binary search on DNA sequences, focusing on efficiency by reducing the dynamic instruction count by 50% and minimizing the static instruction count by 41%.</p>
-							</article>
+    <!-- ============================================================ Experience -->
+    <section class="page content" id="experience" aria-labelledby="experience-title">
+      <header class="page-title">
+        <h2 id="experience-title">Experience</h2>
+        <canvas class="banner" aria-hidden="true"></canvas>
+      </header>
+      <div class="column">
 
-						<!-- Contact -->
-							<article id="contact">
-								<h2 class="major">Resume</h2>
-								<form method="post" action="#">
+        <article class="panel entry">
+          <header><span class="icon">◈</span>Education</header>
+          <img class="shot" src="images/gtbelltower.jpg" alt="Georgia Tech's Tech Tower" width="2880" height="1140" loading="lazy">
+          <div class="body">
+            <h3>Georgia Institute of Technology</h3>
+            <p class="when">August 2023 – May 2026</p>
+          </div>
+        </article>
 
-									<ul class="actions">
-										<li><a href="downloads/GT Resume CE_EE.pdf.pdf" download="GT Resume CE_EE.pdf" class="button primary icon solid fa-download">Resume CE/EE</a></li>
-										<li><a href="downloads/GT Resume CS (2).pdf.pdf.pdf" download="GT Resume CS(2).pdf" class="button primary icon solid fa-download">Resume CS</a></li>
-									</ul>
+        <article class="panel entry">
+          <header><span class="icon">◆</span>MVE Biological Solutions</header>
+          <img class="shot" src="images/mvebio.png" alt="MVE Biological Solutions" width="4102" height="1440" loading="lazy">
+          <div class="body">
+            <h3>Engineering Intern</h3>
+            <p class="when">May 2026 – Present</p>
+            <p>Worked with the software engineering team on firmware implementation and verification for embedded biological storage systems. Assisted in debugging and testing embedded hardware components, wrote and validated protocol documentation, and developed scripts for data logging and analysis. Gained hands-on experience with PLCs, embedded sensors, and software testing workflows.</p>
+          </div>
+        </article>
 
-						
-								</form>
-								<h2 class="major">Links</h2>
-								<ul class="actions">
-									<li><a href="https://github.com/VienJunaid" class="button primary icon solid fa-download">Github</a></li>
-									<li><a href="https://www.linkedin.com/in/vienlytran/" class="button primary icon solid fa-download">LinkedIn</a></li>
-									
-								</ul>
+        <article class="panel entry">
+          <header><span class="icon">◆</span>Hyundai · Capstone</header>
+          <img class="shot" src="images/hyundai_logo.png" alt="Hyundai" width="2400" height="868" loading="lazy">
+          <div class="body">
+            <h3>Lead Software Developer — DaGOATs Capstone, Georgia Tech</h3>
+            <p class="when">January 2026 – May 2026</p>
+            <p>Built a real-time factory monitoring dashboard for Hyundai Motor Group Metaplant America (HMGMA) to detect AMR traffic congestion and pallet docking misalignment using local vision-language models. Developed the full-stack system in Python and JavaScript: a FastAPI backend with threaded RTSP video capture, a custom Ollama VLM inference pipeline (llama3.2-vision, gemma3:4b), WebSocket broadcasting for live dashboard updates, and MJPEG streaming for three independent docking station cameras. Implemented a state-machine-driven pallet alignment checker and a congestion detection algorithm with structured JSON output, all running entirely on-device with no cloud dependency.</p>
+          </div>
+        </article>
 
-								<h2 class="major">contacts</h2>
-								<label for=""demo-name">vtran82@gatech.edu</label>
-							</article>
-						
-						<!-- Resume Element 
-						<article id=""resume">
-							<ul class="actions">
-								<li><a href="downloads/GT Resume.pdf" download="GT Resume CE_EE.pdf" class="button primary icon solid fa-download">Resume</a></li>
-							</ul>
-						</article>
-					-->
-						
+        <article class="panel entry">
+          <header><span class="icon">◆</span>Bio-MIBLab</header>
+          <img class="shot" src="images/biomiblab_logo.png" alt="Bio-MIBLab" width="478" height="150" loading="lazy">
+          <div class="body">
+            <h3>Undergraduate Researcher — Bio-MIBLab, Georgia Tech</h3>
+            <p class="when">August 2025 – Present</p>
+            <p>Conducted research on haptic technology and its applications in healthcare and surgical training. Built and programmed a low-cost wearable haptic glove capable of providing real-time force and vibration feedback, and integrated it with a 3D virtual surgical environment in Unity. Presented research papers on haptic rendering and AI-driven tissue simulation as part of the lab's journal club.</p>
+          </div>
+        </article>
 
-						<!-- Elements -->
-							<article id="elements">
-								<h2 class="major">Element</h2>
+        <article class="panel entry">
+          <header><span class="icon">◆</span>SiP Lab</header>
+          <img class="shot" src="images/SiP%20Lab.png" alt="SiP Lab" width="1338" height="440" loading="lazy">
+          <div class="body">
+            <h3>ML/AI Research Assistant</h3>
+            <p class="when">January 2025 – July 2025</p>
+            <p>Designed and deployed a web-based experimental interface to collect user responses for sentiment classification tasks, enabling high-quality data labeling at scale. Integrated with the Prolific platform to streamline participant flow and manage over 100 contributors efficiently. Contributed to active learning strategies that reduced human input without sacrificing model accuracy, enhancing the system’s ability to learn from minimal supervision and improving overall annotation speed.</p>
+          </div>
+        </article>
 
-								<section>
-									<h3 class="major">Text</h3>
-									<p>This is <b>bold</b> and this is <strong>strong</strong>. This is <i>italic</i> and this is <em>emphasized</em>.
-									This is <sup>superscript</sup> text and this is <sub>subscript</sub> text.
-									This is <u>underlined</u> and this is code: <code>for (;;) { ... }</code>. Finally, <a href="#">this is a link</a>.</p>
-									<hr />
-									<h2>Heading Level 2</h2>
-									<h3>Heading Level 3</h3>
-									<h4>Heading Level 4</h4>
-									<h5>Heading Level 5</h5>
-									<h6>Heading Level 6</h6>
-									<hr />
-									<h4>Blockquote</h4>
-									<blockquote>Fringilla nisl. Donec accumsan interdum nisi, quis tincidunt felis sagittis eget tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan faucibus. Vestibulum ante ipsum primis in faucibus lorem ipsum dolor sit amet nullam adipiscing eu felis.</blockquote>
-									<h4>Preformatted</h4>
-									<pre><code>i = 0;
+        <article class="panel entry">
+          <header><span class="icon">◆</span>Strike · CREATE-X</header>
+          <img class="shot" src="images/createx.png" alt="CREATE-X" width="1338" height="440" loading="lazy">
+          <div class="body">
+            <h3>Founder and Lead Developer for STRIKE Create-X Start Up</h3>
+            <p class="when">August 2024 – December 2024</p>
+            <p>Developed a smart boxing tracking device that measures key metrics like power, speed, and force, and transmits data in real-time via Bluetooth to a smartphone app. Enhanced the accuracy of impact measurements up to 109 Pa through refined product testing, ensuring both device durability and user comfort. Led product launch and marketing efforts, positioning the device as a valuable tool for professional training in boxing gyms, while also promoting its appeal to individual fitness enthusiasts looking to improve their performance.</p>
+          </div>
+        </article>
 
-while (!deck.isInOrder()) {
-    print 'Iteration ' + i;
-    deck.shuffle();
-    i++;
-}
+        <article class="panel entry">
+          <header><span class="icon">◆</span>VIP</header>
+          <img class="shot" src="images/vip.png" alt="Vertically Integrated Projects" width="1336" height="440" loading="lazy">
+          <div class="body">
+            <h3>Vertically Integrated Project Researcher</h3>
+            <p class="when">August 2024 – Present</p>
+            <p>Refined and optimized hardware for delivery drones capable of picking up and delivering packages on campus. Led troubleshooting and repair of electrical components and circuits, improving the drone's performance, durability, modularity, and reliability. Additionally, contributed to the development of an improved drone carrier design to enhance delivery efficiency.</p>
+          </div>
+        </article>
 
-print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
-								</section>
+      </div>
+    </section>
 
-								<section>
-									<h3 class="major">Lists</h3>
+    <!-- ============================================================ Projects -->
+    <section class="page content" id="projects" aria-labelledby="projects-title">
+      <header class="page-title">
+        <h2 id="projects-title">Projects</h2>
+        <canvas class="banner" aria-hidden="true"></canvas>
+      </header>
+      <div class="column cards">
 
-									<h4>Unordered</h4>
-									<ul>
-										<li>Dolor pulvinar etiam.</li>
-										<li>Sagittis adipiscing.</li>
-										<li>Felis enim feugiat.</li>
-									</ul>
+        <article class="panel card">
+          <header><span class="icon">◆</span>Telecontrol Glove</header>
+          <img class="shot" src="images/telecontrol%20glove.png" alt="" width="1338" height="440" loading="lazy">
+          <h3>Robotic Telecontrol Glove</h3>
+          <p>Developed an embedded telecontrol glove system using C++, Arduino, and an ESP-32 to enable real-time VR interaction with a 3D-printed robotic hand. Finger motion was measured via five potentiometers linked by tension strings, calibrated through a custom-built button interface for precise tracking. Integrated tactile feedback by mapping five feedback buttons on the robotic hand to corresponding servos on the glove, simulating the sensation of physical contact. The system created an immersive, bidirectional control loop with potential applications in assistive tech, robotics, and virtual environments.</p>
+        </article>
 
-									<h4>Alternate</h4>
-									<ul class="alt">
-										<li>Dolor pulvinar etiam.</li>
-										<li>Sagittis adipiscing.</li>
-										<li>Felis enim feugiat.</li>
-									</ul>
+        <article class="panel card">
+          <header><span class="icon">◆</span>Crescent Cloud</header>
+          <img class="shot" src="images/aichatbot.png" alt="" width="970" height="320" loading="lazy">
+          <h3>Crescent Cloud AI Support Chatbot</h3>
+          <p>The project involves developing an AI chatbot that has progressed through several levels of complexity. Starting with a basic chatbot structure and input handling, the project evolved by integrating OpenAI's GPT-4 model for intelligent responses, deploying the web app on AWS EC2, and optimizing it using AWS Bedrock and RAG (Retrieval-Augmented Generation) for knowledge-based responses. The final implementation leverages various AWS services, Next.js, and Pinecone for efficient data handling and vectorization, resulting in a sophisticated, scalable chatbot capable of intelligent, context-aware interactions.</p>
+          <a class="more" href="https://www.youtube.com/watch?v=6-iw19WuD4Q" target="_blank" rel="noopener">Video demo ▸</a>
+        </article>
 
-									<h4>Ordered</h4>
-									<ol>
-										<li>Dolor pulvinar etiam.</li>
-										<li>Etiam vel felis viverra.</li>
-										<li>Felis enim feugiat.</li>
-										<li>Dolor pulvinar etiam.</li>
-										<li>Etiam vel felis lorem.</li>
-										<li>Felis enim et feugiat.</li>
-									</ol>
-									<h4>Icons</h4>
-									<ul class="icons">
-										<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
-										<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
-										<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
-										<li><a href="#" class="icon brands fa-github"><span class="label">Github</span></a></li>
-									</ul>
+        <article class="panel card">
+          <header><span class="icon">◆</span>RISC-V</header>
+          <img class="shot" src="images/RISCV.png" alt="" width="1338" height="440" loading="lazy">
+          <h3>RISC-V Processor Design</h3>
+          <p>Designed and implemented a five-stage pipelined RISC-V processor in SystemVerilog, supporting instruction-level parallelism and modular microarchitecture. Boosted execution throughput by 6.44× through hazard mitigation techniques such as pipeline stalling, data forwarding, and branch prediction. Validated design correctness using ModelSim, performing detailed waveform analysis, timing verification, and register tracking to ensure accurate instruction flow and reliable processor performance.</p>
+        </article>
 
-									<h4>Actions</h4>
-									<ul class="actions">
-										<li><a href="#" class="button primary">Default</a></li>
-										<li><a href="#" class="button">Default</a></li>
-									</ul>
-									<ul class="actions stacked">
-										<li><a href="#" class="button primary">Default</a></li>
-										<li><a href="#" class="button">Default</a></li>
-									</ul>
-								</section>
+        <article class="panel card">
+          <header><span class="icon">◆</span>Servo FPGA</header>
+          <img class="shot" src="images/servomachines.png" alt="" width="1338" height="440" loading="lazy">
+          <h3>Servo FPGA Peripheral Design</h3>
+          <p>Designed and implemented an FPGA-based servo controller using VHDL and Assembly to drive five independent servos concurrently, increasing hardware scalability by 400%. Developed precise timing logic and documented system architecture, including signal constraints and interfacing methodology. Addressed challenges in concurrent control and synchronization, ensuring reliable pulse-width modulation and consistent servo behavior under real-time conditions.</p>
+        </article>
 
-								<section>
-									<h3 class="major">Table</h3>
-									<h4>Default</h4>
-									<div class="table-wrapper">
-										<table>
-											<thead>
-												<tr>
-													<th>Name</th>
-													<th>Description</th>
-													<th>Price</th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr>
-													<td>Item One</td>
-													<td>Ante turpis integer aliquet porttitor.</td>
-													<td>29.99</td>
-												</tr>
-												<tr>
-													<td>Item Two</td>
-													<td>Vis ac commodo adipiscing arcu aliquet.</td>
-													<td>19.99</td>
-												</tr>
-												<tr>
-													<td>Item Three</td>
-													<td> Morbi faucibus arcu accumsan lorem.</td>
-													<td>29.99</td>
-												</tr>
-												<tr>
-													<td>Item Four</td>
-													<td>Vitae integer tempus condimentum.</td>
-													<td>19.99</td>
-												</tr>
-												<tr>
-													<td>Item Five</td>
-													<td>Ante turpis integer aliquet porttitor.</td>
-													<td>29.99</td>
-												</tr>
-											</tbody>
-											<tfoot>
-												<tr>
-													<td colspan="2"></td>
-													<td>100.00</td>
-												</tr>
-											</tfoot>
-										</table>
-									</div>
+        <article class="panel card">
+          <header><span class="icon">◆</span>Jet Fire Shooter</header>
+          <img class="shot" src="images/jetshooter.png" alt="" width="970" height="320" loading="lazy">
+          <h3>Jet Fire Shooter mBed System Project</h3>
+          <p>Engineered a real-time space shooter game using C on a custom Arduino-based embedded platform, featuring dynamic UI elements and event-driven input for an interactive user experience. Focused on optimizing system performance by restructuring the game loop with memory-efficient data handling and loop unrolling, resulting in a 50% reduction in execution latency. The project demonstrated embedded-level game logic execution and responsive hardware integration under tight timing constraints.</p>
+          <a class="more" href="https://www.youtube.com/watch?v=0D1zUwdujvA&amp;ab_channel=vientran" target="_blank" rel="noopener">Video demo ▸</a>
+        </article>
 
-									<h4>Alternate</h4>
-									<div class="table-wrapper">
-										<table class="alt">
-											<thead>
-												<tr>
-													<th>Name</th>
-													<th>Description</th>
-													<th>Price</th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr>
-													<td>Item One</td>
-													<td>Ante turpis integer aliquet porttitor.</td>
-													<td>29.99</td>
-												</tr>
-												<tr>
-													<td>Item Two</td>
-													<td>Vis ac commodo adipiscing arcu aliquet.</td>
-													<td>19.99</td>
-												</tr>
-												<tr>
-													<td>Item Three</td>
-													<td> Morbi faucibus arcu accumsan lorem.</td>
-													<td>29.99</td>
-												</tr>
-												<tr>
-													<td>Item Four</td>
-													<td>Vitae integer tempus condimentum.</td>
-													<td>19.99</td>
-												</tr>
-												<tr>
-													<td>Item Five</td>
-													<td>Ante turpis integer aliquet porttitor.</td>
-													<td>29.99</td>
-												</tr>
-											</tbody>
-											<tfoot>
-												<tr>
-													<td colspan="2"></td>
-													<td>100.00</td>
-												</tr>
-											</tfoot>
-										</table>
-									</div>
-								</section>
+        <article class="panel card">
+          <header><span class="icon">◆</span>Pantry Tracker</header>
+          <img class="shot" src="images/pantry.png" alt="" width="1338" height="440" loading="lazy">
+          <h3>Smart Inventory Pantry Tracker</h3>
+          <p>Developed a responsive web application to track pantry inventory in real time, enabling users to monitor food supplies, log usage, and receive stock alerts. Implemented Firebase for backend data storage, real-time database sync, and user authentication, ensuring seamless access across devices. Deployed the full-stack app using GitHub Pages, integrating version control, CI/CD, and collaborative development workflows. Designed intuitive UI components to enhance usability and encourage sustainable household management.</p>
+        </article>
 
-								<section>
-									<h3 class="major">Buttons</h3>
-									<ul class="actions">
-										<li><a href="#" class="button primary">Primary</a></li>
-										<li><a href="#" class="button">Default</a></li>
-									</ul>
-									<ul class="actions">
-										<li><a href="#" class="button">Default</a></li>
-										<li><a href="#" class="button small">Small</a></li>
-									</ul>
-									<ul class="actions">
-										<li><a href="#" class="button primary icon solid fa-download">Icon</a></li>
-										<li><a href="#" class="button icon solid fa-download">Icon</a></li>
-									</ul>
-									<ul class="actions">
-										<li><span class="button primary disabled">Disabled</span></li>
-										<li><span class="button disabled">Disabled</span></li>
-									</ul>
-								</section>
+        <article class="panel card">
+          <header><span class="icon">◆</span>DNA Search</header>
+          <img class="shot" src="images/dnaproject.png" alt="" width="970" height="320" loading="lazy">
+          <h3>Assembly DNA Binary Search</h3>
+          <p>Developed a comprehensive MIPS project that performs a binary search on DNA sequences, focusing on efficiency by reducing the dynamic instruction count by 50% and minimizing the static instruction count by 41%.</p>
+        </article>
 
-								<section>
-									<h3 class="major">Form</h3>
-									<form method="post" action="#">
-										<div class="fields">
-											<div class="field half">
-												<label for="demo-name">Name</label>
-												<input type="text" name="demo-name" id="demo-name" value="" placeholder="Jane Doe" />
-											</div>
-											<div class="field half">
-												<label for="demo-email">Email</label>
-												<input type="email" name="demo-email" id="demo-email" value="" placeholder="jane@untitled.tld" />
-											</div>
-											<div class="field">
-												<label for="demo-category">Category</label>
-												<select name="demo-category" id="demo-category">
-													<option value="">-</option>
-													<option value="1">Manufacturing</option>
-													<option value="1">Shipping</option>
-													<option value="1">Administration</option>
-													<option value="1">Human Resources</option>
-												</select>
-											</div>
-											<div class="field half">
-												<input type="radio" id="demo-priority-low" name="demo-priority" checked>
-												<label for="demo-priority-low">Low</label>
-											</div>
-											<div class="field half">
-												<input type="radio" id="demo-priority-high" name="demo-priority">
-												<label for="demo-priority-high">High</label>
-											</div>
-											<div class="field half">
-												<input type="checkbox" id="demo-copy" name="demo-copy">
-												<label for="demo-copy">Email me a copy</label>
-											</div>
-											<div class="field half">
-												<input type="checkbox" id="demo-human" name="demo-human" checked>
-												<label for="demo-human">Not a robot</label>
-											</div>
-											<div class="field">
-												<label for="demo-message">Message</label>
-												<textarea name="demo-message" id="demo-message" placeholder="Enter your message" rows="6"></textarea>
-											</div>
-										</div>
-										<ul class="actions">
-											<li><input type="submit" value="Send Message" class="primary" /></li>
-											<li><input type="reset" value="Reset" /></li>
-										</ul>
-									</form>
-								</section>
+      </div>
+    </section>
 
-							</article>
+    <!-- ============================================================ Resume & contact -->
+    <section class="page content" id="resume" aria-labelledby="resume-title">
+      <header class="page-title">
+        <h2 id="resume-title">Resume</h2>
+        <canvas class="banner" aria-hidden="true"></canvas>
+      </header>
+      <div class="column narrow">
 
-					</div>
+        <section class="panel">
+          <header><span class="icon">▤</span>Resume</header>
+          <ul class="rows">
+            <li><a href="downloads/GT%20Resume%20CE_EE.pdf" download="Vien Tran - Resume CE-EE.pdf"><span class="name">Computer / Electrical Engineering</span><span class="dots"></span><span class="go">PDF ▾</span></a></li>
+            <li><a href="downloads/GT%20Resume%20CS%20(2).pdf" download="Vien Tran - Resume CS.pdf"><span class="name">Computer Science</span><span class="dots"></span><span class="go">PDF ▾</span></a></li>
+          </ul>
+        </section>
 
-				<!-- Footer -->
-					<footer id="footer">
-						<p class="copyright">&copy;vtran82@gmail.com</p>
-					</footer>
+        <section class="panel">
+          <header><span class="icon">◈</span>Links</header>
+          <ul class="rows">
+            <li><a href="https://github.com/VienJunaid" target="_blank" rel="noopener me"><span class="name">GitHub</span><span class="dots"></span><span class="go">VienJunaid ▸</span></a></li>
+            <li><a href="https://www.linkedin.com/in/vienlytran/" target="_blank" rel="noopener me"><span class="name">LinkedIn</span><span class="dots"></span><span class="go">vienlytran ▸</span></a></li>
+          </ul>
+        </section>
 
-			</div>
+        <section class="panel">
+          <header><span class="icon">✉</span>Contact</header>
+          <ul class="rows">
+            <li><a href="mailto:vtran82@gatech.edu"><span class="name">Email</span><span class="dots"></span><span class="go">vtran82@gatech.edu ▸</span></a></li>
+          </ul>
+        </section>
 
-		<!-- BG -->
-			<div id="bg"></div>
+        <footer class="credits">
+          <p>&copy; Vien Tran · vtran82@gmail.com</p>
+          <p>Quran text: <a href="https://tanzil.net" target="_blank" rel="noopener">Tanzil</a> (Uthmani), unmodified. Translation: Sahih International. Fonts: JetBrains Mono and Amiri Quran (SIL Open Font License).</p>
+        </footer>
 
-		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
+      </div>
+    </section>
 
-	</body>
+  </main>
+
+  <!-- Always at the bottom middle: the pages, and the box that changes the page's background -->
+  <nav class="dock" aria-label="Pages">
+    <div class="bg-box tabs" id="tabs">
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#experience">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#resume">Resume</a>
+    </div>
+    <button class="bg-box needs-js" id="bg-button" aria-label="Change this page's background">▣<span class="word"> Background</span> <span class="arrow">▸</span></button>
+  </nav>
+
+</body>
 </html>

@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" shape-rendering="crispEdges">
+  <rect width="16" height="16" fill="#1a1b26"/>
+  <!-- a pixel crescent, gold with a lit edge -->
+  <path fill="#e2b24a" d="M6 2h4v1h2v1h1v2h-2V5h-1V4H8v1H7v1H6v4h1v1h1v1h2v-1h1v-1h2v2h-1v1h-2v1H6v-1H4v-1H3V4h1V3h2z"/>
+  <path fill="#fff3c4" d="M6 2h4v1H6zM4 3h2v1H4zM3 4h1v3H3z"/>
+</svg>

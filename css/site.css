@@ -1,0 +1,441 @@
+/*
+ * The look of the RPi Dashboard, as a website: JetBrains Mono, theme tokens that follow the scene,
+ * and Omarchy-style boxes with the title cut into the top border, over a pixel-art canvas.
+ * Styles marked "dashboard" are taken from its Svelte components, so the two match.
+ */
+
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('../fonts/JetBrainsMono.ttf') format('truetype');
+  font-weight: 100 800;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Amiri Quran';
+  src: url('../fonts/AmiriQuran-Regular.ttf') format('truetype');
+  font-display: swap;
+}
+
+/* Theme tokens are overwritten at runtime from the scene's theme (data/scenes.json → themes) */
+:root {
+  --bg: #1a1b26;
+  --fg: #c0caf5;
+  --accent: #7aa2f7;
+  --muted: #565f89;
+  --verse: #ffffff;
+  /* What the boxes are filled with. Pages of long text darken it (see .content). */
+  --panel: var(--bg);
+  --live: #ffd166;   /* where you are / the live prayer */
+  --picked: #7fe3ff; /* what you picked */
+  --font-mono: 'JetBrains Mono', 'CaskaydiaMono Nerd Font', ui-monospace, monospace;
+  --font-arabic: 'Amiri Quran', 'KFGQPC Uthmanic Script HAFS', serif;
+  /* The dashboard scales its UI with the screen height; the floor keeps long text readable */
+  font-size: clamp(13px, 1.55vh, 22px);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-mono);
+  -webkit-text-size-adjust: 100%;
+}
+
+a { color: var(--accent); }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 1px solid var(--accent); outline-offset: 3px; }
+img { display: block; max-width: 100%; height: auto; }
+
+#scene {
+  position: fixed; top: 0; left: 0; display: block;
+  image-rendering: pixelated;
+  opacity: 0; transition: opacity 0.6s;
+}
+body.ready #scene { opacity: 1; }
+
+#app { position: fixed; inset: 0; }
+
+/* ---------------------------------------------------------------- pages */
+
+.page { position: absolute; inset: 0; display: none; }
+.page.active { display: block; animation: page-in 0.5s 0.45s both; }
+/* The page you first land on has no wipe to wait for */
+body:not(.ready) .page.active { animation-delay: 0s; }
+.page.leaving { display: block; animation: page-out 0.25s both; pointer-events: none; }
+@keyframes page-in { from { opacity: 0; } }
+@keyframes page-out { to { opacity: 0; } }
+
+/* ---------------------------------------------------------------- box (dashboard: Panel.svelte) */
+
+.panel {
+  position: relative;
+  min-width: 16rem;
+  padding: 1.1rem 1.2rem 0.9rem;
+  border: 1px solid color-mix(in srgb, var(--muted) 80%, transparent);
+  /* No backdrop blur by default: over a canvas that changes every frame, it is redone every frame */
+  background: color-mix(in srgb, var(--panel) 86%, transparent);
+}
+/* Glass blur (Settings, per device): frosted */
+html.glass .panel { background: color-mix(in srgb, var(--panel) 82%, transparent); backdrop-filter: blur(2px); }
+.panel > header {
+  position: absolute;
+  top: -0.7em;
+  left: 0.9rem;
+  max-width: calc(100% - 1.8rem);
+  padding: 0 0.5rem;
+  background: var(--panel);
+  color: var(--accent);
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.icon:not(:empty) { margin-right: 0.45rem; }
+
+/* ---------------------------------------------------------------- home (dashboard: App.svelte) */
+
+.home { overflow-y: auto; }
+.widgets {
+  position: relative;
+  min-height: 100%;
+  display: grid;
+  /* The middle column takes only the space between the side boxes, so the verse can't overlap them */
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-rows: auto 1fr auto;
+  grid-template-areas:
+    'top-left top-center top-right'
+    'middle-left . middle-right'
+    'bottom-left bottom-center bottom-right';
+  column-gap: 2.5vw;
+  row-gap: 1.6rem;
+  /* Room at the bottom for the dock */
+  padding: 3.5vh 2.5vw calc(3.5vh + 7rem);
+  pointer-events: none;
+}
+.area { display: flex; flex-direction: column; gap: 1.6rem; pointer-events: auto; min-width: 0; }
+.top-left { grid-area: top-left; align-items: flex-start; }
+.top-center { grid-area: top-center; align-items: center; gap: 1.2rem; }
+.top-right { grid-area: top-right; align-items: flex-end; }
+.bottom-left { grid-area: bottom-left; align-items: flex-start; justify-content: flex-end; }
+
+/* Clock (dashboard: widgets/clock) */
+.open-settings { all: unset; display: block; cursor: pointer; }
+.open-settings:hover .panel, .open-settings:active .panel { border-color: var(--accent); }
+.open-settings:focus-visible { outline: 1px solid var(--accent); outline-offset: 3px; }
+.time { display: flex; align-items: flex-end; gap: 0.6rem; color: var(--fg); }
+.time pre { font-family: inherit; font-size: 1.6rem; line-height: 1; letter-spacing: -0.02em; }
+.meridiem { color: var(--muted); font-size: 0.9rem; padding-bottom: 0.2rem; }
+.date { margin-top: 0.7rem; color: var(--fg); }
+.hijri { color: var(--accent); font-size: 0.9rem; }
+
+/* Salah (dashboard: widgets/prayer-times) and every other list of dotted rows */
+.salah ul, .rows { list-style: none; min-width: 15rem; }
+.salah li, .rows li { line-height: 1.7; }
+.salah button, .rows a {
+  all: unset;
+  display: flex; align-items: baseline; gap: 0.4rem; width: 100%; box-sizing: border-box;
+  cursor: pointer; border-radius: 2px; padding: 0 0.25rem; margin: 0 -0.25rem;
+}
+.salah button:disabled { cursor: default; }
+.salah button:not(:disabled):hover, .rows a:hover { background: color-mix(in srgb, var(--fg) 12%, transparent); }
+.salah button:focus-visible, .rows a:focus-visible { outline: 1px solid var(--accent); }
+.dots { flex: 1; min-width: 1rem; border-bottom: 1px dotted color-mix(in srgb, var(--muted) 60%, transparent); transform: translateY(-0.3em); }
+.dim { color: var(--muted); }
+/* Live prayer time */
+.live { color: var(--live); }
+.live .name { font-weight: 700; }
+/* Scene picked by tapping (only when it differs from the live one) */
+.picked { color: var(--picked); }
+.picked .name { font-weight: 700; }
+.picked button { background: color-mix(in srgb, var(--picked) 14%, transparent); }
+.marker { width: 1ch; }
+.countdown { margin-top: 0.6rem; color: var(--muted); font-size: 0.9rem; }
+.countdown b { color: var(--fg); font-weight: 600; }
+.rows .go { color: var(--accent); white-space: nowrap; }
+
+/* Verse (dashboard: widgets/quran-verse) */
+.verse-stack { position: relative; display: grid; justify-items: center; max-width: min(100%, 60rem); }
+.verse-stack[hidden] { display: none; }
+/* The whole box is the button: it lies over the verse, which stays plain text underneath */
+.verse-stack .open { all: unset; position: absolute; inset: 0; z-index: 1; cursor: pointer; }
+.verse-stack .open:hover ~ figure, .verse-stack .open:focus-visible ~ figure { border-color: var(--accent); }
+html.glass .verse-stack figure { background: color-mix(in srgb, var(--bg) 68%, transparent); backdrop-filter: blur(4px); }
+.verse-stack figure {
+  grid-area: 1 / 1;
+  position: relative;
+  width: fit-content;
+  max-width: 100%;
+  text-align: center;
+  color: var(--verse);
+  padding: 1.4rem 2.6rem 1.1rem;
+  /* A see-through panel so the verse reads over any background */
+  background: color-mix(in srgb, var(--bg) 76%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--bg) 25%, transparent), 0 8px 32px color-mix(in srgb, var(--bg) 50%, transparent);
+  text-shadow: 0 1px 6px var(--bg);
+  /* Old and new verses share one grid cell so they crossfade in place */
+  opacity: 0; transition: opacity 1.5s, border-color 0.2s;
+}
+.verse-stack figure.in { opacity: 1; }
+.ornament {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -55%);
+  padding: 0 0.6rem;
+  font-family: var(--font-arabic);
+  font-size: 1.4rem;
+  line-height: 1;
+  color: var(--accent);
+  background: color-mix(in srgb, var(--bg) 92%, transparent);
+  text-shadow: none;
+}
+.bismillah { font-family: var(--font-arabic); font-size: clamp(1rem, 1.8vw, 1.7rem); opacity: 0.75; margin-bottom: 0.4rem; }
+.verse-stack blockquote { font-family: var(--font-arabic); font-size: clamp(1.6rem, 3vw, 3.2rem); line-height: 1.75; }
+.ayah { font-size: 0.8em; white-space: nowrap; }
+.translation { margin-top: 0.8rem; font-size: clamp(0.9rem, 1.25vw, 1.3rem); line-height: 1.5; opacity: 0.92; }
+.verse-stack figcaption { margin-top: 0.6rem; font-size: 0.85rem; color: var(--accent); letter-spacing: 0.05em; }
+
+/* Pixel title (dashboard: PixelTitle.svelte) */
+.title-wrap, .page-title { position: relative; max-width: 100%; }
+/* Unboxed (under the verse): a soft dark glow so the text reads over bright scenery */
+.title-wrap:not(.boxed), .page-title {
+  padding: 0.4rem 1.2rem;
+  background: radial-gradient(ellipse at center, color-mix(in srgb, var(--bg) 55%, transparent) 20%, transparent 72%);
+}
+/* Same frosted box as the verse, for when it stands in the verse's place */
+.title-wrap.boxed {
+  padding: 1.3rem 2.2rem 1rem;
+  background: color-mix(in srgb, var(--bg) 76%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--bg) 25%, transparent), 0 8px 32px color-mix(in srgb, var(--bg) 50%, transparent);
+}
+.title-wrap:not(.boxed) .ornament { display: none; }
+.banner {
+  display: block;
+  image-rendering: pixelated;
+  filter: drop-shadow(0 0 0.5rem rgba(255, 196, 110, 0.45));
+}
+/* The real headings stay for screen readers and search engines; the canvas is what you see */
+.title-wrap h1, .page-title h2 {
+  position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap;
+}
+
+/* The little card at the bottom left of the home page */
+.intro { max-width: 22rem; }
+.who { display: flex; align-items: center; gap: 0.9rem; margin-bottom: 0.8rem; }
+.who img {
+  width: 4.2rem; height: 4.2rem; flex: none; object-fit: cover;
+  border: 1px solid color-mix(in srgb, var(--muted) 80%, transparent);
+}
+.who p { line-height: 1.45; }
+.rows a { color: var(--fg); }
+
+/* ---------------------------------------------------------------- pages of text */
+
+.content {
+  overflow-y: auto;
+  padding: 3.5vh 2.5vw 11rem;
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--muted) 80%, transparent) transparent;
+  /* Long text needs more contrast than a clock does, and some themes are bright (a daytime sky) */
+  --panel: color-mix(in srgb, var(--bg) 62%, #05060a);
+}
+.content .panel { background: color-mix(in srgb, var(--panel) 90%, transparent); min-width: 0; }
+.page-title { width: fit-content; margin: 0 auto 2rem; min-height: 4rem; }
+.column { max-width: 62rem; margin: 0 auto; display: grid; gap: 2.2rem; }
+.column.narrow { max-width: 40rem; }
+.column.cards { max-width: 78rem; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; }
+
+.content p { line-height: 1.65; color: color-mix(in srgb, var(--fg) 92%, transparent); }
+.content p + p { margin-top: 0.9rem; }
+.content b { color: var(--fg); font-weight: 700; }
+.content h3 { font-size: 1.1rem; font-weight: 700; line-height: 1.35; color: var(--fg); }
+.when { color: var(--accent); font-size: 0.9rem; letter-spacing: 0.04em; margin: 0.25rem 0 0.7rem; }
+.content p.when { color: var(--accent); }
+
+/* Photos and logos sit in a thin frame, like everything else */
+.shot {
+  width: 100%;
+  border: 1px solid color-mix(in srgb, var(--muted) 60%, transparent);
+  background: #fff;
+}
+.prose .shot.wide { aspect-ratio: 16 / 7; object-fit: cover; margin-bottom: 1rem; }
+
+.entry { display: grid; grid-template-columns: minmax(0, 17rem) minmax(0, 1fr); gap: 1.4rem; align-items: start; padding-top: 1.4rem; }
+
+.card { padding-top: 1.4rem; display: flex; flex-direction: column; }
+.card .shot { aspect-ratio: 3 / 1; object-fit: cover; margin-bottom: 0.9rem; }
+.card h3 { margin-bottom: 0.5rem; }
+.more { align-self: flex-end; margin-top: 0.8rem; color: var(--accent); font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; }
+.more:hover { text-decoration: underline; }
+
+.credits {
+  padding: 0.7rem 1rem; color: color-mix(in srgb, var(--fg) 75%, transparent); font-size: 0.8rem; text-align: center;
+  background: color-mix(in srgb, var(--panel) 80%, transparent);
+}
+.credits p { line-height: 1.5; }
+.credits a { color: inherit; }
+
+/* ---------------------------------------------------------------- dock (dashboard: the Background box) */
+
+.dock {
+  position: fixed; left: 50%; bottom: max(3.5vh, env(safe-area-inset-bottom)); transform: translateX(-50%); z-index: 5;
+  /* The pages in the middle, and the Background box under them */
+  display: flex; flex-direction: column; align-items: center; gap: 0.5rem; max-width: 96vw;
+}
+/* Same see-through box as the clock, small */
+.bg-box {
+  color: var(--fg); font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase; white-space: nowrap;
+  border: 1px solid color-mix(in srgb, var(--muted) 80%, transparent);
+  /* A little more solid than the clock's 86%: text scrolls underneath it */
+  background: color-mix(in srgb, var(--bg) 94%, transparent);
+}
+html.glass .bg-box { background: color-mix(in srgb, var(--bg) 82%, transparent); backdrop-filter: blur(2px); }
+button.bg-box { appearance: none; padding: 0.55rem 1.1rem; cursor: pointer; font-family: inherit; border-radius: 0; }
+button.bg-box .arrow { color: var(--accent); margin-left: 0.2rem; }
+button.bg-box:hover, button.bg-box:active { border-color: var(--accent); }
+.tabs { display: flex; }
+.tabs a { padding: 0.55rem 0.9rem; color: var(--fg); text-decoration: none; }
+.tabs a:hover { color: var(--accent); }
+/* Where you are: yellow, like the live prayer */
+.tabs a[aria-current] { color: var(--live); font-weight: 700; }
+.tabs a[aria-current]::after { content: ' ◀'; font-weight: 400; }
+
+/* ---------------------------------------------------------------- settings and the background picker */
+
+.backdrop { position: fixed; inset: 0; z-index: 20; }
+.backdrop.dark { background: color-mix(in srgb, var(--bg) 55%, transparent); }
+.sheet {
+  position: fixed; z-index: 21; left: 50%;
+  display: flex; flex-direction: column; gap: 0.6rem;
+  border: 1px solid color-mix(in srgb, var(--accent) 55%, transparent);
+  min-width: 0;
+}
+.sheet button { all: unset; cursor: pointer; box-sizing: border-box; }
+.sheet button:focus-visible { outline: 1px solid var(--accent); outline-offset: 2px; }
+.sheet .close { position: absolute; top: 0.4rem; right: 0.6rem; color: var(--muted); font-size: 1rem; padding: 0.2rem 0.4rem; }
+
+.settings {
+  top: 50%; transform: translate(-50%, -50%);
+  width: min(34rem, 88vw); max-height: 92vh; padding: 1.6rem 1.4rem 1.2rem;
+  background: color-mix(in srgb, var(--bg) 92%, transparent);
+  backdrop-filter: blur(4px);
+  animation: pop 0.22s;
+}
+@keyframes pop { from { opacity: 0; transform: translate(-50%, -50%) scale(0.94); } }
+.sheet .row {
+  display: flex; align-items: center; gap: 1rem; padding: 0.7rem 0.8rem;
+  border: 1px solid color-mix(in srgb, var(--muted) 45%, transparent);
+}
+.sheet .row:hover { border-color: color-mix(in srgb, var(--accent) 60%, transparent); }
+.sheet .row:active { background: color-mix(in srgb, var(--accent) 15%, transparent); }
+.label { flex: 1; display: flex; flex-direction: column; gap: 0.15rem; }
+.label b { color: var(--fg); font-weight: 600; }
+.label small { color: color-mix(in srgb, var(--fg) 60%, var(--muted)); font-size: 0.78rem; line-height: 1.3; }
+.row .go { color: var(--accent); letter-spacing: 0.08em; white-space: nowrap; }
+/* Pixel-style switch */
+.switch { width: 2.6rem; height: 1.2rem; border: 1px solid var(--muted); display: flex; padding: 2px; flex: none; }
+.switch span { width: 50%; height: 100%; background: var(--muted); transition: transform 0.15s steps(3); }
+.switch.on { border-color: var(--picked); }
+.switch.on span { background: var(--picked); transform: translateX(100%); }
+
+.picker {
+  bottom: 10vh; transform: translateX(-50%);
+  width: min(44rem, 92vw); padding: 1.5rem 1.2rem 1rem;
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: blur(4px);
+  animation: rise 0.26s;
+}
+@keyframes rise { from { opacity: 0; transform: translate(-50%, 30px); } }
+/* Only the list scrolls: overflow on the box itself would clip the title cut into its border */
+.picker .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; max-height: 50vh; overflow-y: auto; }
+.sheet .option {
+  padding: 0.65rem 0.8rem; color: var(--fg); font-size: 0.9rem;
+  border: 1px solid color-mix(in srgb, var(--muted) 45%, transparent);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.option small { color: var(--muted); font-size: 0.75rem; }
+.sheet .option:hover { border-color: color-mix(in srgb, var(--accent) 60%, transparent); }
+.sheet .option.on { border-color: var(--picked); color: var(--picked); background: color-mix(in srgb, var(--picked) 10%, transparent); }
+.option.on::before { content: '◆ '; }
+.option.wide { text-align: center; }
+.actions { display: flex; justify-content: flex-end; gap: 0.6rem; margin-top: 0.4rem; }
+.sheet .action { padding: 0.5rem 1.2rem; border: 1px solid var(--muted); color: var(--muted); letter-spacing: 0.06em; }
+.sheet .action.save { border-color: var(--accent); color: var(--accent); }
+.sheet .action:disabled { opacity: 0.35; cursor: default; }
+
+/* ---------------------------------------------------------------- scenery mode: only the art */
+
+body.scenery #app, body.scenery .dock { display: none; }
+body.scenery { cursor: pointer; }
+.exit-scenery {
+  all: unset;
+  position: fixed; left: 50%; bottom: 3vh; transform: translateX(-50%); z-index: 10;
+  width: 2.6rem; height: 2.6rem; display: grid; place-items: center;
+  font-size: 1.1rem; color: #fff; cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.35); border-radius: 50%;
+  background: rgba(0, 0, 0, 0.18);
+  opacity: 0.22; /* barely there until touched */
+  transition: opacity 0.2s;
+}
+.exit-scenery:hover, .exit-scenery:active, .exit-scenery:focus-visible { opacity: 0.8; }
+
+.stats {
+  position: fixed; left: 0.5rem; bottom: 0.5rem; z-index: 10;
+  font-size: 0.75rem; color: var(--accent); background: var(--bg); padding: 0.1rem 0.4rem;
+}
+
+/* ---------------------------------------------------------------- small screens */
+
+@media (max-width: 900px) {
+  /* One column that scrolls: the name and verse, then the boxes */
+  .widgets { display: flex; flex-direction: column; align-items: center; padding: 3vh 4vw 11rem; }
+  .area { align-items: center; width: 100%; }
+  .top-center { order: -1; }
+  .home .panel { width: min(100%, 24rem); }
+  .open-settings { width: min(100%, 24rem); }
+  .open-settings .panel { width: 100%; }
+  .intro { max-width: none; }
+  .verse-stack figure { padding: 1.2rem 1.2rem 0.9rem; }
+
+  .content { padding: 3vh 4vw 11rem; }
+  .column.cards { grid-template-columns: minmax(0, 1fr); }
+  .entry { grid-template-columns: minmax(0, 1fr); gap: 0.9rem; }
+  .picker .grid { grid-template-columns: repeat(2, 1fr); }
+
+  .bg-box { font-size: 0.78rem; letter-spacing: 0.03em; }
+  .tabs a { padding: 0.8rem 0.5rem; }
+  .tabs a[aria-current]::after { content: none; }
+  button.bg-box { padding: 0.6rem 0.9rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page.active, .page.leaving, .settings, .picker { animation: none; }
+  .verse-stack figure { transition: none; }
+}
+
+/* ---------------------------------------------------------------- without JavaScript: one plain document */
+
+html:not(.js), html:not(.js) body { height: auto; overflow: visible; }
+html:not(.js) #scene, html:not(.js) .needs-js { display: none; }
+html:not(.js) #app { position: static; }
+html:not(.js) .page { display: block; position: static; animation: none; overflow: visible; }
+html:not(.js) .widgets { display: block; min-height: 0; }
+html:not(.js) .banner { display: none; }
+html:not(.js) .title-wrap h1, html:not(.js) .page-title h2 {
+  position: static; width: auto; height: auto; clip-path: none;
+  color: var(--accent); font-size: 1.6rem; letter-spacing: 0.08em; text-transform: uppercase; text-align: center;
+}
+html:not(.js) .content { padding-bottom: 2rem; }
+html:not(.js) .dock { position: sticky; bottom: 1rem; left: auto; transform: none; width: fit-content; margin: 0 auto 1rem; }
+
+@media print {
+  html, body { height: auto; overflow: visible; background: #fff; color: #000; }
+  #scene, .dock, .needs-js, .banner { display: none !important; }
+  #app, .page { position: static; display: block !important; overflow: visible; animation: none; }
+}
