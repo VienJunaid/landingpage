@@ -112,27 +112,38 @@
           <img class="shot" src="images/gtbelltower.jpg" alt="Georgia Tech's Tech Tower" width="2880" height="1140" loading="lazy">
           <div class="body">
             <h3>Georgia Institute of Technology</h3>
-            <p class="when">August 2023 – May 2026</p>
+            <p class="when">August 2023 – Fall 2026 (expected) · Atlanta, GA</p>
+            <p>Bachelor of Science in Computer Engineering</p>
+            <p>Concentration: Computer Hardware and Software Systems</p>
+            <p><b>Coursework:</b> Advanced VLSI, Advanced Computer Architecture, Embedded Systems Design, Data Structures and Algorithms, Digital Design Lab, Object-Oriented Programming, Cloud Computing</p>
           </div>
         </article>
+
+        <section class="panel">
+          <header><span class="icon">▤</span>Skills</header>
+          <dl class="skills">
+            <dt>Programming</dt>
+            <dd>Java, Python, C, C++, JavaScript, MIPS, RISC-V, Verilog, VHDL, React.js, GitHub, x86</dd>
+            <dt>Tools &amp; software</dt>
+            <dd>Linux, Cadence Virtuoso, Amazon AWS, VS Code, Do-More Designer</dd>
+            <dt>Hardware</dt>
+            <dd>Raspberry Pi, ARM mbed microcontroller, FPGAs, oscilloscope, logic analyzer, ESP32, UART, SPI, I2C, PLC</dd>
+          </dl>
+        </section>
 
         <article class="panel entry">
           <header><span class="icon">◆</span>MVE Biological Solutions</header>
           <img class="shot" src="images/mvebio.png" alt="MVE Biological Solutions" width="4102" height="1440" loading="lazy">
           <div class="body">
             <h3>Engineering Intern</h3>
-            <p class="when">May 2026 – Present</p>
-            <p>Worked with the software engineering team on firmware implementation and verification for embedded biological storage systems. Assisted in debugging and testing embedded hardware components, wrote and validated protocol documentation, and developed scripts for data logging and analysis. Gained hands-on experience with PLCs, embedded sensors, and software testing workflows.</p>
-          </div>
-        </article>
-
-        <article class="panel entry">
-          <header><span class="icon">◆</span>Hyundai · Capstone</header>
-          <img class="shot" src="images/hyundai_logo.png" alt="Hyundai" width="2400" height="868" loading="lazy">
-          <div class="body">
-            <h3>Lead Software Developer — DaGOATs Capstone, Georgia Tech</h3>
-            <p class="when">January 2026 – May 2026</p>
-            <p>Built a real-time factory monitoring dashboard for Hyundai Motor Group Metaplant America (HMGMA) to detect AMR traffic congestion and pallet docking misalignment using local vision-language models. Developed the full-stack system in Python and JavaScript: a FastAPI backend with threaded RTSP video capture, a custom Ollama VLM inference pipeline (llama3.2-vision, gemma3:4b), WebSocket broadcasting for live dashboard updates, and MJPEG streaming for three independent docking station cameras. Implemented a state-machine-driven pallet alignment checker and a congestion detection algorithm with structured JSON output, all running entirely on-device with no cloud dependency.</p>
+            <p class="when">May 2026 – August 2026 · Ball Ground, GA</p>
+            <ul class="points">
+              <li>Extended and contributed to a Python-based embedded firmware test framework for medical freezer controllers, writing new USB JSON command test cases and implementing verification logic across <b>70+ test functions</b> – covering temperature setpoint validation, fill state transitions, alarm thresholds, lid behaviors, and RTC configuration – cross-validating responses across both USB and ASCII serial interfaces to confirm firmware correctness.</li>
+              <li>Authored formal verification and validation test reports for multiple protocols (alarms, firmware releases, liquid-level sensing), used directly in release review and quality documentation workflows in <b>Greenlight Guru</b>.</li>
+              <li>Developed and integrated a Python <b>CLI</b> tool that automatically ingests, parses, and consolidates 7 distinct unit test output and coverage reports from nightly cloud build artifacts, eliminating <b>8-10 hours</b> of manual logging review per protocol and deploying end-to-end within a <b>multi-job GitHub Action CI/CD pipeline</b> with automated artifact extraction and report generation.</li>
+              <li>Configured <b>SSH</b> environments on embedded <b>Linux</b> controller boards and operated a CM4 ReTerminal (Raspberry Pi-based) as a portable test platform to execute shell scripts, extract structured .csv sensor logs, and interface directly with device firmware – supporting a <b>BME280</b> temperature offset characterization study that measured sensor variance across different laboratory environments and controller configurations.</li>
+              <li>Programmed a <b>PLC</b> program in Do-More Designer for a BRX controller, implementing analog input reads from positional sensors, writing custom filtering functions to stabilize signal output, and configuring motor control logic to drive a rotating freezer fixture through bidirectional rotation sequences across hundreds of automated test cycles – simulating 4-5 years of real-world customer use in an accelerated mechanical wear validation experiment.</li>
+            </ul>
           </div>
         </article>
 
@@ -140,9 +151,40 @@
           <header><span class="icon">◆</span>Bio-MIBLab</header>
           <img class="shot" src="images/biomiblab_logo.png" alt="Bio-MIBLab" width="478" height="150" loading="lazy">
           <div class="body">
-            <h3>Undergraduate Researcher — Bio-MIBLab, Georgia Tech</h3>
-            <p class="when">August 2025 – Present</p>
-            <p>Conducted research on haptic technology and its applications in healthcare and surgical training. Built and programmed a low-cost wearable haptic glove capable of providing real-time force and vibration feedback, and integrated it with a 3D virtual surgical environment in Unity. Presented research papers on haptic rendering and AI-driven tissue simulation as part of the lab's journal club.</p>
+            <h3>Haptic Device Research Assistant — Bio-Medical Informatics and Bioimaging Lab</h3>
+            <p class="when">August 2025 – June 2026 · Atlanta, GA</p>
+            <ul class="points">
+              <li>Prototyped an <b>XR</b> haptic pipeline using the Unity OpenXR plugin and ESP32 microcontroller that translates bone collision events into <b>servo-based</b> motion constraints.</li>
+              <li>Presented research at the <b>IEEE</b> Bio-Health Informatics Conference and received the NextGen Scholar award recognized by <b>Google</b>, <b>National Science Foundation</b>, and <b>IEEE EMBS</b>.</li>
+              <li>Surveyed <b>30+ publications</b> on haptic rendering, virtual coupling, and texture perception to evaluate haptic rendering for surgical tasks.</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="panel entry">
+          <header><span class="icon">◆</span>Hyundai · Capstone</header>
+          <img class="shot" src="images/hyundai_logo.png" alt="Hyundai" width="2400" height="868" loading="lazy">
+          <div class="body">
+            <h3>Software / AI System Engineer — Hyundai Motor Group Capstone</h3>
+            <p class="when">January 2026 – May 2026</p>
+            <ul class="points">
+              <li>Engineered a smart manufacturing dashboard that fused edge computer vision outputs with real-time operational alerts to detect AMR congestion, improve mission visibility, and support plant-floor decision making.</li>
+              <li>Benchmarked motion-based, color-based, and deep learning pipelines for industrial AMR monitoring, selecting lightweight VLM models for balanced detection quality, explainability, and deployability on constrained edge hardware.</li>
+              <li>Designed the software workflow for a distributed edge vision system in which Raspberry Pi camera nodes transmitted traffic and pallet-monitoring video streams to an NVIDIA Jetson for localized inference and dashboard integration.</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="panel entry">
+          <header><span class="icon">◆</span>Strike</header>
+          <img class="shot" src="images/createx.png" alt="CREATE-X" width="1338" height="440" loading="lazy">
+          <div class="body">
+            <h3>Embedded Systems Engineer, Co-Founder — Strike</h3>
+            <p class="when">May 2024 – January 2025 · Atlanta, GA</p>
+            <ul class="points">
+              <li>Developed a wearable punch-tracking device using an <b>ESP32</b> microcontroller, an <b>I2C IMU</b> for motion tracking, and an analog pressure transducer for impact sensing, capturing high-dynamic punch profiles during live strikes.</li>
+              <li>Implemented <b>embedded C/C++ firmware</b> for real-time data acquisition, sensor filtering, and <b>Wi-Fi/BLE</b> streaming, achieving ~<b>30-40 ms</b> end-to-end latency to a client visualization dashboard for power and speed analysis.</li>
+            </ul>
           </div>
         </article>
 
@@ -150,19 +192,13 @@
           <header><span class="icon">◆</span>SiP Lab</header>
           <img class="shot" src="images/SiP%20Lab.png" alt="SiP Lab" width="1338" height="440" loading="lazy">
           <div class="body">
-            <h3>ML/AI Research Assistant</h3>
-            <p class="when">January 2025 – July 2025</p>
-            <p>Designed and deployed a web-based experimental interface to collect user responses for sentiment classification tasks, enabling high-quality data labeling at scale. Integrated with the Prolific platform to streamline participant flow and manage over 100 contributors efficiently. Contributed to active learning strategies that reduced human input without sacrificing model accuracy, enhancing the system’s ability to learn from minimal supervision and improving overall annotation speed.</p>
-          </div>
-        </article>
-
-        <article class="panel entry">
-          <header><span class="icon">◆</span>Strike · CREATE-X</header>
-          <img class="shot" src="images/createx.png" alt="CREATE-X" width="1338" height="440" loading="lazy">
-          <div class="body">
-            <h3>Founder and Lead Developer for STRIKE Create-X Start Up</h3>
-            <p class="when">August 2024 – December 2024</p>
-            <p>Developed a smart boxing tracking device that measures key metrics like power, speed, and force, and transmits data in real-time via Bluetooth to a smartphone app. Enhanced the accuracy of impact measurements up to 109 Pa through refined product testing, ensuring both device durability and user comfort. Led product launch and marketing efforts, positioning the device as a valuable tool for professional training in boxing gyms, while also promoting its appeal to individual fitness enthusiasts looking to improve their performance.</p>
+            <h3>AI/ML Research Assistant — Structured Information for Precision Neuroengineering Lab</h3>
+            <p class="when">January 2025 – July 2025 · Atlanta, GA</p>
+            <ul class="points">
+              <li>Built a web-based experimental platform using <b>Next.js</b> and <b>Docker</b>, hosted on <b>Amazon EC2</b> for scalable, remote user access.</li>
+              <li>Architected experiment workflows and participant pipelines via <b>Qualtrics</b>, enabling scalable data collection from over <b>100 users</b> and improving data labeling efficiency.</li>
+              <li>Supported a <b>human-in-the-loop Machine Learning</b> research paper by validating that richer human interactions reduce training iterations by over <b>60%</b> while maintaining model accuracy.</li>
+            </ul>
           </div>
         </article>
 
@@ -176,6 +212,16 @@
           </div>
         </article>
 
+        <section class="panel">
+          <header><span class="icon">✦</span>Leadership</header>
+          <h3>Philanthropy and Interfaith Committee — Georgia Tech Muslim Student Association</h3>
+          <p class="when">2023 – Current</p>
+          <ul class="points">
+            <li>Raised money for charities through sales and other events, including helping to raise over <b>$140,000</b> for the Human Development Fund in one week.</li>
+            <li>Directed gallery program operation for a <b>200+</b> attendee event using a systems engineering approach: designing the multi-room visitor flow layout, coordinating volunteer task allocation, presentation infrastructure and material logistics, and building structured workflows for resource planning, inventory control, deadline tracking, and continuous process improvement across the full event lifecycle, while supporting art decor development through 3D modeling, woodworking, and digital technology integration.</li>
+          </ul>
+        </section>
+
       </div>
     </section>
 
@@ -188,10 +234,23 @@
       <div class="column cards">
 
         <article class="panel card">
+          <header><span class="icon">◆</span>This site</header>
+          <img class="shot" src="images/thissite.png" alt="The home page of this site: a pixel-art sunrise over Al-Aqsa with a clock, a Quran verse and prayer times" width="1338" height="446" loading="lazy">
+          <h3>vienjunaid.com &amp; the RPi Dashboard</h3>
+          <p>This site shares its engine with a full-screen home screen I run on a Raspberry Pi. Everything on the canvas is a grid of text cells: a WebGL2 glyph-atlas renderer (with a Canvas 2D fallback) draws each cell's character, foreground and background color, and half-block characters turn every cell into two stacked pixels. The scenes are procedural pixel art, drawn by code and animated at 20 fps for about 0.2 ms of CPU per frame, and the home page follows the prayer times, calculated offline in the browser. The site is plain HTML, CSS and ES modules with no build step, and one script syncs the renderer, scenes and themes over from the dashboard.</p>
+          <a class="more" href="https://github.com/VienJunaid/rpi-dashboard" target="_blank" rel="noopener">Dashboard source ▸</a>
+        </article>
+
+        <article class="panel card">
           <header><span class="icon">◆</span>Telecontrol Glove</header>
           <img class="shot" src="images/telecontrol%20glove.png" alt="" width="1338" height="440" loading="lazy">
           <h3>Robotic Telecontrol Glove</h3>
-          <p>Developed an embedded telecontrol glove system using C++, Arduino, and an ESP-32 to enable real-time VR interaction with a 3D-printed robotic hand. Finger motion was measured via five potentiometers linked by tension strings, calibrated through a custom-built button interface for precise tracking. Integrated tactile feedback by mapping five feedback buttons on the robotic hand to corresponding servos on the glove, simulating the sensation of physical contact. The system created an immersive, bidirectional control loop with potential applications in assistive tech, robotics, and virtual environments.</p>
+          <p class="when">April 2025 · C++, ESP-32, Arduino, Servo, VR Integration</p>
+          <ul class="points">
+            <li>Built a sensor wearable glove for robotic hand teleoperation using an ESP32 microcontroller, acquiring 5 analog flexion channels from potentiometers linked by tension strings for finger-position tracking and robotic mirroring.</li>
+            <li>Wrote embedded C/C++ firmware to sample the flexion channels, applying calibration and encoding states via alphabetic serial protocols at <b>~250 Hz (4 ms)</b>.</li>
+            <li>Integrated tactile feedback by mapping five feedback buttons on the robotic hand to corresponding servos on the glove, simulating the sensation of physical contact.</li>
+          </ul>
         </article>
 
         <article class="panel card">
@@ -217,11 +276,27 @@
         </article>
 
         <article class="panel card">
-          <header><span class="icon">◆</span>Jet Fire Shooter</header>
+          <header><span class="icon">◆</span>Embedded Arcade</header>
           <img class="shot" src="images/jetshooter.png" alt="" width="970" height="320" loading="lazy">
-          <h3>Jet Fire Shooter mBed System Project</h3>
-          <p>Engineered a real-time space shooter game using C on a custom Arduino-based embedded platform, featuring dynamic UI elements and event-driven input for an interactive user experience. Focused on optimizing system performance by restructuring the game loop with memory-efficient data handling and loop unrolling, resulting in a 50% reduction in execution latency. The project demonstrated embedded-level game logic execution and responsive hardware integration under tight timing constraints.</p>
+          <h3>Real-Time Embedded Arcade Platform</h3>
+          <p class="when">June 2024 · C, Arduino, Embedded Systems</p>
+          <ul class="points">
+            <li>Engineered a real-time space shooter game on a custom embedded platform, integrating event-driven input handling and dynamic UI elements for enhanced user interactivity.</li>
+            <li>Implemented SoC peripheral interfaces including SPI (uLCD display, SD card), GPIO (pushbuttons, switches), and PWM/audio output.</li>
+            <li>Optimized the core game loop for performance, reducing execution latency and achieving <b>a 50% improvement</b> in load times through memory-efficient data structures and loop unrolling.</li>
+          </ul>
           <a class="more" href="https://www.youtube.com/watch?v=0D1zUwdujvA&amp;ab_channel=vientran" target="_blank" rel="noopener">Video demo ▸</a>
+        </article>
+
+        <article class="panel card">
+          <header><span class="icon">◆</span>Cloud Photo Gallery</header>
+          <h3>Cloud Photo Gallery Platform</h3>
+          <p class="when">March 2026 · AWS EC2, Lambda, API Gateway, S3, DynamoDB, RDS, MySQL, Cognito</p>
+          <ul class="points">
+            <li>Built a full-stack cloud photo gallery platform across serverless and virtual machine-based AWS deployments, enabling user signup, login, album creation, photo upload, search, and gallery management through integrated frontend, backend, and database workflows.</li>
+            <li>Engineered both SQL and NoSQL application architectures using RDS/MySQL and DynamoDB, implementing hashed user authentication, ownership-based access control, and synchronized storage of images, tags, and metadata.</li>
+            <li>Deployed and tested the system on AWS using EC2, Lambda, API Gateway, S3, and Cognito, strengthening experience in cloud application design, database integration, and end-to-end web platform development.</li>
+          </ul>
         </article>
 
         <article class="panel card">

@@ -202,10 +202,16 @@ html.glass .verse-stack figure { background: color-mix(in srgb, var(--bg) 68%, t
 
 /* Pixel title (dashboard: PixelTitle.svelte) */
 .title-wrap, .page-title { position: relative; max-width: 100%; }
-/* Unboxed (under the verse): a soft dark glow so the text reads over bright scenery */
-.title-wrap:not(.boxed), .page-title {
+/* Page titles: a soft dark glow so the text reads over bright scenery */
+.page-title {
   padding: 0.4rem 1.2rem;
   background: radial-gradient(ellipse at center, color-mix(in srgb, var(--bg) 55%, transparent) 20%, transparent 72%);
+}
+/* The name under the verse: a light see-through box, fainter than the clock's */
+.title-wrap:not(.boxed) {
+  padding: 0.5rem 1.4rem;
+  background: color-mix(in srgb, var(--bg) 50%, transparent);
+  border: 1px solid color-mix(in srgb, var(--muted) 60%, transparent);
 }
 /* Same frosted box as the verse, for when it stands in the verse's place */
 .title-wrap.boxed {
@@ -271,6 +277,16 @@ html.glass .verse-stack figure { background: color-mix(in srgb, var(--bg) 68%, t
 .card { padding-top: 1.4rem; display: flex; flex-direction: column; }
 .card .shot { aspect-ratio: 3 / 1; object-fit: cover; margin-bottom: 0.9rem; }
 .card h3 { margin-bottom: 0.5rem; }
+.card h3:has(+ .when) { margin-bottom: 0; }
+
+/* Resume-style bullet points, with the dashboard's diamond as the bullet */
+.points { list-style: none; display: grid; gap: 0.65rem; }
+.points li { position: relative; padding-left: 1.4em; line-height: 1.6; color: color-mix(in srgb, var(--fg) 92%, transparent); }
+.points li::before { content: '◆'; position: absolute; left: 0; color: var(--accent); font-size: 0.7em; top: 0.35em; }
+.entry .body p + p { margin-top: 0.35rem; }
+.skills { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 0.6rem 1.4rem; line-height: 1.55; }
+.skills dt { color: var(--accent); white-space: nowrap; }
+.skills dd { color: color-mix(in srgb, var(--fg) 92%, transparent); }
 .more { align-self: flex-end; margin-top: 0.8rem; color: var(--accent); font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; }
 .more:hover { text-decoration: underline; }
 
@@ -406,6 +422,8 @@ body.scenery { cursor: pointer; }
   .content { padding: 3vh 4vw 11rem; }
   .column.cards { grid-template-columns: minmax(0, 1fr); }
   .entry { grid-template-columns: minmax(0, 1fr); gap: 0.9rem; }
+  .skills { grid-template-columns: minmax(0, 1fr); gap: 0.15rem; }
+  .skills dd { margin-bottom: 0.6rem; }
   .picker .grid { grid-template-columns: repeat(2, 1fr); }
 
   .bg-box { font-size: 0.78rem; letter-spacing: 0.03em; }
