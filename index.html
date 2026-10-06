@@ -379,6 +379,16 @@
             <span class="name">Image Format Converter</span>
             <span class="blurb">Convert images to PNG, JPEG, WebP or BMP — most formats read in</span>
           </button>
+          <button type="button" class="tool-tile" data-tool="qibla">
+            <span class="icon">◆</span>
+            <span class="name">Qibla Direction</span>
+            <span class="blurb">Find which way to face for prayer, from your location or any coordinates</span>
+          </button>
+          <button type="button" class="tool-tile" data-tool="pixelart">
+            <span class="icon">▦</span>
+            <span class="name">Pixel Art &amp; ASCII Art</span>
+            <span class="blurb">Turn a photo into retro pixel art or rendered ASCII text art</span>
+          </button>
         </div>
       </div>
 
@@ -519,6 +529,98 @@
           </div>
 
           <p class="tool-status" id="tool-image-status" role="status" aria-live="polite"></p>
+        </article>
+      </div>
+
+      <div class="column tool-view" id="tool-view-qibla" hidden>
+        <button type="button" class="tool-back">◀ All tools</button>
+
+        <article class="panel card tool" id="tool-qibla">
+          <header><span class="icon">◆</span>Qibla Direction</header>
+          <h3>Qibla Direction</h3>
+          <p>Find which way to face for prayer, from your location or any coordinates. Runs entirely in your browser — your location is never sent anywhere.</p>
+
+          <div class="tool-actions">
+            <button type="button" class="primary" id="tool-qibla-locate">Use my location</button>
+          </div>
+
+          <div class="color-input-row">
+            <input type="text" id="tool-qibla-lat" class="tool-text" placeholder="Latitude, e.g. 33.7490" inputmode="decimal">
+            <input type="text" id="tool-qibla-lon" class="tool-text" placeholder="Longitude, e.g. -84.3880" inputmode="decimal">
+            <button type="button" class="tool-clear" id="tool-qibla-manual">Show</button>
+          </div>
+
+          <div class="qibla-compass" id="tool-qibla-compass" hidden>
+            <svg viewBox="0 0 200 200" width="220" height="220" aria-hidden="true">
+              <circle class="qibla-ring" cx="100" cy="100" r="92"></circle>
+              <text class="qibla-tick" x="100" y="18" text-anchor="middle">N</text>
+              <text class="qibla-tick" x="182" y="105" text-anchor="middle">E</text>
+              <text class="qibla-tick" x="100" y="193" text-anchor="middle">S</text>
+              <text class="qibla-tick" x="18" y="105" text-anchor="middle">W</text>
+              <g id="tool-qibla-needle">
+                <line x1="100" y1="100" x2="100" y2="28" class="qibla-needle-line"></line>
+                <polygon points="100,16 90,38 110,38" class="qibla-needle-head"></polygon>
+                <circle cx="100" cy="100" r="5" class="qibla-needle-hub"></circle>
+              </g>
+            </svg>
+            <p class="qibla-reading" id="tool-qibla-reading"></p>
+            <div class="tool-actions"><button type="button" class="tool-clear" id="tool-qibla-sensor">Use device compass</button></div>
+          </div>
+
+          <p class="tool-status" id="tool-qibla-status" role="status" aria-live="polite"></p>
+        </article>
+      </div>
+
+      <div class="column tool-view" id="tool-view-pixelart" hidden>
+        <button type="button" class="tool-back">◀ All tools</button>
+
+        <article class="panel card tool" id="tool-pixelart">
+          <header><span class="icon">▦</span>Pixel Art &amp; ASCII Art</header>
+          <h3>Pixel Art &amp; ASCII Art</h3>
+          <p>Turn a photo into retro pixel art or rendered ASCII text art. Runs entirely in your browser — nothing is uploaded anywhere.</p>
+
+          <div class="tool-modes" role="group" aria-label="Style">
+            <button type="button" class="tool-mode" data-mode="pixelate" aria-pressed="false">Pixel Art</button>
+            <button type="button" class="tool-mode" data-mode="ascii" aria-pressed="false">ASCII Art</button>
+          </div>
+
+          <div class="tool-option-row" id="tool-pixelart-pixelate-options">
+            <label class="tool-slider">Block size
+              <input type="range" id="tool-pixelart-blocksize" min="2" max="32" value="8">
+              <span id="tool-pixelart-blocksize-out">8px</span>
+            </label>
+            <div class="tool-modes" role="group" aria-label="Palette">
+              <button type="button" class="tool-mode" data-palette="none" aria-pressed="false">Full color</button>
+              <button type="button" class="tool-mode" data-palette="gray" aria-pressed="false">Grayscale</button>
+              <button type="button" class="tool-mode" data-palette="gameboy" aria-pressed="false">Game Boy</button>
+              <button type="button" class="tool-mode" data-palette="retro16" aria-pressed="false">16-color</button>
+            </div>
+          </div>
+
+          <div class="tool-option-row" id="tool-pixelart-ascii-options" hidden>
+            <label class="tool-slider">Width
+              <input type="range" id="tool-pixelart-asciiwidth" min="40" max="200" value="100">
+              <span id="tool-pixelart-asciiwidth-out">100 cols</span>
+            </label>
+            <div class="tool-modes" role="group" aria-label="Color">
+              <button type="button" class="tool-mode" data-ascii-color="mono" aria-pressed="false">Monochrome</button>
+              <button type="button" class="tool-mode" data-ascii-color="color" aria-pressed="false">Full color</button>
+            </div>
+          </div>
+
+          <label class="tool-drop" id="tool-pixelart-drop">
+            <input type="file" id="tool-pixelart-files" accept="image/*" multiple>
+            <span>Choose images <span class="go">or drop them here ▸</span></span>
+          </label>
+
+          <ul class="tool-filelist" id="tool-pixelart-filelist"></ul>
+
+          <div class="tool-actions">
+            <button type="button" class="tool-clear" id="tool-pixelart-clear" disabled>Clear</button>
+            <button type="button" class="primary" id="tool-pixelart-run" disabled>Convert</button>
+          </div>
+
+          <p class="tool-status" id="tool-pixelart-status" role="status" aria-live="polite"></p>
         </article>
       </div>
 

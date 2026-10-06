@@ -350,13 +350,14 @@ html.glass .tool-back { background: color-mix(in srgb, var(--bg) 82%, transparen
 .tool-filelist button:hover { color: var(--error); }
 
 .tool-actions { display: flex; gap: 0.8rem; margin-bottom: 0.7rem; }
-.tool-actions button {
+/* .color-input-row's own button (Qibla's "Show") gets the same reset without a wrapping .tool-actions */
+.tool-actions button, .color-input-row button {
   all: unset; cursor: pointer; box-sizing: border-box;
   padding: 0.5rem 1.2rem; border: 1px solid var(--muted); color: var(--muted); letter-spacing: 0.06em; font-size: 0.85rem;
 }
 .tool-actions button.primary { border-color: var(--accent); color: var(--accent); }
-.tool-actions button:disabled { opacity: 0.35; cursor: default; }
-.tool-actions button:not(:disabled):hover { background: color-mix(in srgb, var(--fg) 12%, transparent); }
+.tool-actions button:disabled, .color-input-row button:disabled { opacity: 0.35; cursor: default; }
+.tool-actions button:not(:disabled):hover, .color-input-row button:not(:disabled):hover { background: color-mix(in srgb, var(--fg) 12%, transparent); }
 
 .tool-status { font-size: 0.88rem; color: var(--muted); min-height: 1.3em; }
 .tool-status.busy { color: var(--accent); }
@@ -401,6 +402,24 @@ html.glass .tool-back { background: color-mix(in srgb, var(--bg) 82%, transparen
 /* QR Code Generator: always true black-on-white, whatever the scene theme, so it keeps scanning */
 .qr-preview { display: flex; justify-content: center; margin-bottom: 1rem; }
 .qr-preview canvas { display: block; background: #fff; padding: 0.8rem; border: 1px solid color-mix(in srgb, var(--muted) 60%, transparent); }
+
+/* Qibla Direction */
+.qibla-compass { display: flex; flex-direction: column; align-items: center; gap: 0.8rem; margin: 1rem 0; }
+.qibla-ring { fill: none; stroke: color-mix(in srgb, var(--muted) 70%, transparent); stroke-width: 1.5; }
+.qibla-tick { fill: var(--muted); font-family: var(--font-mono); font-size: 13px; }
+#tool-qibla-needle { transform-origin: 100px 100px; transition: transform 0.4s ease; }
+.qibla-needle-line { stroke: var(--accent); stroke-width: 2.5; }
+.qibla-needle-head { fill: var(--accent); }
+.qibla-needle-hub { fill: var(--fg); }
+.qibla-reading { font-size: 0.95rem; color: var(--fg); text-align: center; max-width: 24rem; }
+.qibla-reading b { color: var(--accent); }
+
+/* A labeled range slider, used by Pixel Art / ASCII Art's block-size and width controls */
+.tool-option-row { display: flex; flex-direction: column; gap: 0.7rem; margin-bottom: 1rem; }
+.tool-option-row[hidden] { display: none; }
+.tool-slider { display: flex; align-items: center; gap: 0.6rem; color: var(--muted); font-size: 0.85rem; }
+.tool-slider input[type="range"] { flex: 1; accent-color: var(--accent); }
+.tool-slider span { color: var(--fg); min-width: 4.5em; text-align: right; }
 
 .credits {
   padding: 0.7rem 1rem; color: color-mix(in srgb, var(--fg) 75%, transparent); font-size: 0.8rem; text-align: center;

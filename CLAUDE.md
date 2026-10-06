@@ -92,6 +92,8 @@ js/tools-video.js    the Tools page's Video Converter card
 js/tools-color.js    the Tools page's Color Converter card (no library: the browser is the parser)
 js/tools-qr.js       the Tools page's QR Code Generator card
 js/tools-image.js    the Tools page's Image Format Converter card
+js/tools-qibla.js    the Tools page's Qibla Direction card (reuses adhan's own Qibla() bearing calc)
+js/tools-pixelart.js the Tools page's Pixel Art / ASCII Art card
 js/engine/           GENERATED: the dashboard's renderer, scenes and lib helpers, TS → JS
 js/vendor/           adhan (MIT) is GENERATED, synced from the dashboard; pdf-lib, pdf.js, JSZip,
                      ffmpeg.wasm and qrcode (for js/tools-*.js) are vendored by hand (see

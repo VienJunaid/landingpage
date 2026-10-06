@@ -13,6 +13,8 @@ import { initVideoTool } from './tools-video.js'
 import { initColorTool } from './tools-color.js'
 import { initQrTool } from './tools-qr.js'
 import { initImageTool } from './tools-image.js'
+import { initQiblaTool } from './tools-qibla.js'
+import { initPixelArtTool } from './tools-pixelart.js'
 
 /*
  * The site's App.svelte: the pixel-art scene behind everything, the pages in front of it, and the
@@ -493,6 +495,8 @@ async function boot() {
   initColorTool($('#tool-color'))
   initQrTool($('#tool-qr'))
   initImageTool($('#tool-image'))
+  initQiblaTool($('#tool-qibla'))
+  initPixelArtTool($('#tool-pixelart'))
 
   document.body.classList.add('ready')
 }
