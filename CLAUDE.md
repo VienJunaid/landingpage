@@ -99,6 +99,7 @@ js/vendor/           adhan (MIT) is GENERATED, synced from the dashboard; pdf-li
 data/                GENERATED: scenes.json (scenes + themes + backgrounds + characters), verses.json
 fonts/               GENERATED: JetBrains Mono, Amiri Quran (OFL)
 tools/               sync-dashboard.mjs
+.claude/skills/      add-tool, add-page, test-in-browser — read these before the matching task
 ```
 
 - **Generated folders are never edited here.** Change the dashboard, then run the sync.
@@ -115,44 +116,15 @@ tools/               sync-dashboard.mjs
 
 ## Conventions
 
-- **Adding a page:** add a `<section class="page content" id="…">` in `index.html` (with the
-  `page-title` header and its `canvas.banner`), a link in the dock, and an entry in
-  `config.pages` with `id`, `label`, `subtitle` and `scene`.
-- **Adding an entry:** copy an `article.panel.entry` (Experience) or `article.panel.card` (Projects).
-  Give images `width` and `height`, and URL-encode spaces in file names (`SiP%20Lab.png`).
-- **Pixel title subtitles must be short**, no wider than the title. The pixels shrink to fit the
-  width, so a long subtitle makes the whole title tiny on a phone.
+- **Adding a page, or an entry/card within one:** see the **add-page** skill
+  (`.claude/skills/add-page/`) for the full recipe and templates.
 - **Adding a scene:** build it in the dashboard, then sync. It appears in the picker automatically.
 - **Class names:** `.label` belongs to Settings rows. Don't reuse it elsewhere (see Gotchas).
-- **Adding a tool (Tools page):** the page is a browser of tools (`js/tools.js`), not a wall of
-  cards — tapping a `.tool-tile` in `#tools-browse` swaps in that tool's `.tool-view` (a `◀ All
-  tools` `.tool-back` button, then a `.panel.card.tool`), and both are hidden until picked. To add
-  one: add its tile (`icon`, `name`, `blurb`, `data-tool="<key>"`) to `.tool-grid`, and a
-  `<div class="column tool-view" id="tool-view-<key>" hidden>` holding the back button and the
-  tool's own `.panel.card.tool` (unique ids inside it, e.g. `tool-<key>-run`). `js/tools.js` only
-  handles which view is showing; a tool's own behavior is its own module (`js/tools-pdf.js` is the
-  pattern) with an `init…(root)` function called once in `app.js`'s `boot()`, same as `initPdfTool`.
-  Keep the card's static shell (buttons, labels, containers) in HTML and only attach behavior in
-  JS, same as the rest of the site. Any library the tool needs only it uses: `import()` it lazily
-  (on first real use, not on page load) from `js/vendor/`, so other pages stay light. If the
-  library has no ES module build, load it as a classic `<script>` injected at runtime (see
-  `importJSZip` in `tools-pdf.js`) rather than a static `<script>` tag, for the same reason. Vendor
-  the file by hand — these libraries aren't part of the dashboard, so `tools/sync-dashboard.mjs`
-  doesn't touch them — fetch the package's browser build (e.g. from
-  `cdn.jsdelivr.net/npm/<pkg>@<version>/...`) straight into `js/vendor/`, plus its license file as
-  `<name>.LICENSE`, matching how `adhan` is named. If a package has no pre-built browser bundle
-  (check its `dist`/`build` folder on jsdelivr first), `cdn.jsdelivr.net/npm/<pkg>@<version>/+esm`
-  auto-bundles one on the fly — fetch *that* instead of hand-rolling one, same as `qrcode` (for
-  `tools-qr.js`). Check it for bare imports of its own dependencies (e.g. `qrcode` pulls in
-  `dijkstrajs`) — jsdelivr points those at itself too, so vendor each one the same way and rewrite
-  the import path to the local sibling file, or the tool silently depends on jsdelivr at runtime.
-  Check the license of what you vendor: most of these are MIT, but `@ffmpeg/core`
-  (`js/vendor/ffmpeg/core/`, used by `tools-video.js`) is GPL — that's fine to redistribute as the
-  unmodified compiled build it is, just don't lose the notice.
-  **Before building a tool that talks to an outside service** (downloads from a site, calls a
-  third-party API, …): this is a static GitHub Pages site with no backend and no secrets store, so
-  anything needing a server, an API key, or bypassing a site's own access controls (e.g. a
-  YouTube/Spotify/Instagram downloader) isn't a fit here — check with the owner before starting.
+- **Adding a tool to the Tools page**, or extending an existing one: see the **add-tool** skill
+  (`.claude/skills/add-tool/`) for the full recipe, the CSS classes to reuse, vendoring a library,
+  and the pitfalls already hit. Short version: it's a browser of tools (`js/tools.js`), not a wall
+  of cards; no backend ever exists here, so a tool needing a server, an API key, or to bypass a
+  site's own access controls (a YouTube downloader is the precedent) gets declined, not built.
 
 ## Gotchas already hit
 
@@ -169,9 +141,9 @@ tools/               sync-dashboard.mjs
 - **Resizing rebuilds every scene's static layers.** `scene-view.js` debounces `resize` and skips it
   when the grid size is unchanged. Pages scroll inside their own container, so a phone's URL bar
   doesn't resize the canvas.
-- **Screenshot testing:** use `puppeteer-core` with the system Chrome
-  (`--use-angle=swiftshader --enable-unsafe-swiftshader`), and wait about 5 s for the title to
-  assemble. Headless runs at ~14 fps (software rendering); CPU per frame is about 0.2 ms.
+- **Testing a change:** see the **test-in-browser** skill (`.claude/skills/test-in-browser/`) —
+  this project has no test suite, so that skill *is* the testing process. Headless runs at ~14 fps
+  (software rendering); CPU per frame is about 0.2 ms.
 - **Old template leftovers:** `assets/`, `Elements.txt` and `LICENSE.txt` are from the previous
   HTML5 UP template and are unused. They are the owner's to delete. A copy of the old page is at
   `/Users/vien/Documents/LandingPage/index.old.html`.
