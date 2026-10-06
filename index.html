@@ -44,6 +44,11 @@
             <span class="ornament" aria-hidden="true">۞</span>
             <h1>Vien Tran</h1>
             <canvas class="banner" aria-hidden="true"></canvas>
+            <ul class="rows">
+              <li><a href="#about"><span class="name">About me</span><span class="dots"></span><span class="go">read ▸</span></a></li>
+              <li><a href="#projects"><span class="name">Projects</span><span class="dots"></span><span class="go">see ▸</span></a></li>
+              <li><a href="#resume"><span class="name">Resume</span><span class="dots"></span><span class="go">get ▸</span></a></li>
+            </ul>
           </div>
         </div>
 
@@ -52,21 +57,6 @@
             <header><span class="icon">☾</span>Salah · <span id="salah-place"></span></header>
             <ul id="salah"></ul>
             <p class="countdown" id="salah-countdown"></p>
-          </section>
-        </div>
-
-        <div class="area bottom-left">
-          <section class="panel intro">
-            <header><span class="icon">✦</span>Salaam</header>
-            <div class="who">
-              <img src="images/junaidprofessional.png" alt="Vien Tran" width="300" height="300">
-              <p>A student willing to improve his endeavors in all realms.</p>
-            </div>
-            <ul class="rows">
-              <li><a href="#about"><span class="name">About me</span><span class="dots"></span><span class="go">read ▸</span></a></li>
-              <li><a href="#projects"><span class="name">Projects</span><span class="dots"></span><span class="go">see ▸</span></a></li>
-              <li><a href="#resume"><span class="name">Resume</span><span class="dots"></span><span class="go">get ▸</span></a></li>
-            </ul>
           </section>
         </div>
 
@@ -355,6 +345,46 @@
       </div>
     </section>
 
+    <!-- ============================================================ Tools -->
+    <section class="page content" id="tools" aria-labelledby="tools-title">
+      <header class="page-title">
+        <h2 id="tools-title">Tools</h2>
+        <canvas class="banner" aria-hidden="true"></canvas>
+      </header>
+      <div class="column cards">
+
+        <article class="panel card tool needs-js" id="tool-pdf">
+          <header><span class="icon">⇄</span>PDF Converter</header>
+          <h3>PDF Converter</h3>
+          <p>Convert images to a PDF, a PDF to images, merge several PDFs into one, or split PDFs into single-page files. Runs entirely in your browser — nothing is uploaded anywhere.</p>
+
+          <div class="tool-modes" role="group" aria-label="Conversion mode">
+            <button type="button" class="tool-mode" data-mode="img2pdf" aria-pressed="false">Images ▸ PDF</button>
+            <button type="button" class="tool-mode" data-mode="pdf2img" aria-pressed="false">PDF ▸ Images</button>
+            <button type="button" class="tool-mode" data-mode="merge" aria-pressed="false">Merge PDFs</button>
+            <button type="button" class="tool-mode" data-mode="split" aria-pressed="false">Split PDFs</button>
+          </div>
+
+          <p class="tool-hint" id="tool-pdf-hint"></p>
+
+          <label class="tool-drop" id="tool-pdf-drop">
+            <input type="file" id="tool-pdf-files" multiple>
+            <span>Choose files <span class="go">or drop them here ▸</span></span>
+          </label>
+
+          <ul class="tool-filelist" id="tool-pdf-filelist"></ul>
+
+          <div class="tool-actions">
+            <button type="button" class="tool-clear" id="tool-pdf-clear" disabled>Clear</button>
+            <button type="button" class="primary" id="tool-pdf-run" disabled>Convert</button>
+          </div>
+
+          <p class="tool-status" id="tool-pdf-status" role="status" aria-live="polite"></p>
+        </article>
+
+      </div>
+    </section>
+
   </main>
 
   <!-- Always at the bottom middle: the pages, and the box that changes the page's background -->
@@ -365,6 +395,7 @@
       <a href="#experience">Experience</a>
       <a href="#projects">Projects</a>
       <a href="#resume">Resume</a>
+      <a href="#tools">Tools</a>
     </div>
     <button class="bg-box needs-js" id="bg-button" aria-label="Change this page's background">▣<span class="word"> Background</span> <span class="arrow">▸</span></button>
   </nav>

@@ -18,6 +18,9 @@ inside it.
     blur.
   - Tap the verse for another verse.
 - **About, Experience, Projects, Resume:** boxes of text over one scene each, with a pixel title.
+- **Tools:** boxes of text *and working browser tools* over one scene, structured like Projects (one
+  `.panel.card` per tool, in `.column.cards`) but a tool's card is interactive instead of a static
+  blurb. Everything runs client-side — nothing is ever uploaded. See "Adding a tool" below.
 - **Dock** (bottom middle, every page): the page links, and **▣ Background** to change that page's
   scene.
 - **Scenery mode:** only the art. Tap left or right to browse every scene; a faint ✕ returns.
@@ -29,8 +32,9 @@ inside it.
 | Experience | `madinah` |
 | Projects | `haram-aerial` |
 | Resume | `night-mosque` |
+| Tools | `farooq-arch` |
 
-Also available in the picker and scenery mode: `aqsa-sunset`, `farooq-arch`.
+Also available in the picker and scenery mode: `aqsa-sunset`.
 
 ## Owner preferences (follow these)
 
@@ -82,8 +86,10 @@ js/app.js            pages, hash routing, clock, Salah, verse, settings, picker,
 js/scene-view.js     canvas + pixel wipe            (port of AsciiScene.svelte)
 js/pixel-title.js    fly-in pixel titles            (port of PixelTitle.svelte)
 js/prayer-times.js   adhan in the browser           (same shape as /api/prayer/today)
+js/tools-pdf.js      the Tools page's PDF Converter card
 js/engine/           GENERATED: the dashboard's renderer, scenes and lib helpers, TS → JS
-js/vendor/           GENERATED: adhan (MIT)
+js/vendor/           adhan (MIT) is GENERATED, synced from the dashboard; pdf-lib, pdf.js and
+                      JSZip (for js/tools-pdf.js) are vendored by hand (see "Adding a tool")
 data/                GENERATED: scenes.json (scenes + themes + backgrounds + characters), verses.json
 fonts/               GENERATED: JetBrains Mono, Amiri Quran (OFL)
 tools/               sync-dashboard.mjs
@@ -112,6 +118,17 @@ tools/               sync-dashboard.mjs
   width, so a long subtitle makes the whole title tiny on a phone.
 - **Adding a scene:** build it in the dashboard, then sync. It appears in the picker automatically.
 - **Class names:** `.label` belongs to Settings rows. Don't reuse it elsewhere (see Gotchas).
+- **Adding a tool (Tools page):** copy `js/tools-pdf.js`'s shape — an `init…(root)` function the
+  page calls once in `app.js`'s `boot()`, wiring up a `.panel.card.tool` in `index.html` (give it
+  `grid-column: 1 / -1` like `.card.tool` so it gets the full row). Keep the card's static shell
+  (buttons, labels, containers) in HTML and only attach behavior in JS, same as the rest of the
+  site. Any library the tool needs only it uses: `import()` it lazily (on first real use, not on
+  page load) from `js/vendor/`, so other pages stay light. If the library has no ES module build,
+  load it as a classic `<script>` injected at runtime (see `importJSZip` in `tools-pdf.js`) rather
+  than a static `<script>` tag, for the same reason. Vendor the file by hand — these libraries
+  aren't part of the dashboard, so `tools/sync-dashboard.mjs` doesn't touch them — fetch the
+  package's browser build (e.g. from `cdn.jsdelivr.net/npm/<pkg>@<version>/...`) straight into
+  `js/vendor/`, plus its license file as `<name>.LICENSE`, matching how `adhan` is named.
 
 ## Gotchas already hit
 

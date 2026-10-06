@@ -7,6 +7,7 @@ import { currentPeriod, PRAYERS, setPrayerData } from './engine/lib/prayerClock.
 import { applyTheme } from './engine/lib/theme.js'
 import { formatTime, is12h, setHour12 } from './engine/lib/timeFormat.js'
 import { bigText } from './engine/widgets/clock/digits.js'
+import { initPdfTool } from './tools-pdf.js'
 
 /*
  * The site's App.svelte: the pixel-art scene behind everything, the pages in front of it, and the
@@ -476,6 +477,9 @@ async function boot() {
   }, 1000)
   // A new day
   setInterval(() => { refreshPrayers(); buildSalah() }, 30 * 60_000)
+
+  // ---- tools (js/tools-pdf.js). Wiring up is cheap; the heavy libraries load lazily on first use.
+  initPdfTool($('#tool-pdf'))
 
   document.body.classList.add('ready')
 }

@@ -27,6 +27,7 @@
   --panel: var(--bg);
   --live: #ffd166;   /* where you are / the live prayer */
   --picked: #7fe3ff; /* what you picked */
+  --error: #ff8080;  /* a tool that couldn't do what you asked */
   --font-mono: 'JetBrains Mono', 'CaskaydiaMono Nerd Font', ui-monospace, monospace;
   --font-arabic: 'Amiri Quran', 'KFGQPC Uthmanic Script HAFS', serif;
   /* The dashboard scales its UI with the screen height; the floor keeps long text readable */
@@ -120,7 +121,6 @@ html.glass .panel { background: color-mix(in srgb, var(--panel) 82%, transparent
 .top-left { grid-area: top-left; align-items: flex-start; }
 .top-center { grid-area: top-center; align-items: center; gap: 1.2rem; }
 .top-right { grid-area: top-right; align-items: flex-end; }
-.bottom-left { grid-area: bottom-left; align-items: flex-start; justify-content: flex-end; }
 
 /* Clock (dashboard: widgets/clock) */
 .open-settings { all: unset; display: block; cursor: pointer; }
@@ -221,6 +221,8 @@ html.glass .verse-stack figure { background: color-mix(in srgb, var(--bg) 68%, t
   box-shadow: 0 0 0 4px color-mix(in srgb, var(--bg) 25%, transparent), 0 8px 32px color-mix(in srgb, var(--bg) 50%, transparent);
 }
 .title-wrap:not(.boxed) .ornament { display: none; }
+/* About me / Projects / Resume, under the pixel name */
+.title-wrap .rows { margin: 0.9rem auto 0; }
 .banner {
   display: block;
   image-rendering: pixelated;
@@ -231,14 +233,6 @@ html.glass .verse-stack figure { background: color-mix(in srgb, var(--bg) 68%, t
   position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap;
 }
 
-/* The little card at the bottom left of the home page */
-.intro { max-width: 22rem; }
-.who { display: flex; align-items: center; gap: 0.9rem; margin-bottom: 0.8rem; }
-.who img {
-  width: 4.2rem; height: 4.2rem; flex: none; object-fit: cover;
-  border: 1px solid color-mix(in srgb, var(--muted) 80%, transparent);
-}
-.who p { line-height: 1.45; }
 .rows a { color: var(--fg); }
 
 /* ---------------------------------------------------------------- pages of text */
@@ -289,6 +283,61 @@ html.glass .verse-stack figure { background: color-mix(in srgb, var(--bg) 68%, t
 .skills dd { color: color-mix(in srgb, var(--fg) 92%, transparent); }
 .more { align-self: flex-end; margin-top: 0.8rem; color: var(--accent); font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; }
 .more:hover { text-decoration: underline; }
+
+/* ---------------------------------------------------------------- Tools (PDF Converter and friends) */
+
+/* A tool needs more room than a project blurb: the full row, not half of it */
+.card.tool { grid-column: 1 / -1; }
+.tool h3 { margin-bottom: 0.6rem; }
+.tool > p { margin-bottom: 1rem; }
+
+.tool-modes { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
+.tool-mode {
+  all: unset; cursor: pointer; box-sizing: border-box;
+  padding: 0.4rem 0.85rem; font-size: 0.85rem; letter-spacing: 0.03em; color: var(--muted);
+  border: 1px solid color-mix(in srgb, var(--muted) 70%, transparent);
+}
+.tool-mode:hover { border-color: color-mix(in srgb, var(--accent) 60%, transparent); }
+.tool-mode:focus-visible { outline: 1px solid var(--accent); outline-offset: 2px; }
+.tool-mode.on { border-color: var(--accent); color: var(--accent); background: color-mix(in srgb, var(--accent) 10%, transparent); }
+
+.tool-hint { color: var(--muted); font-size: 0.88rem; margin-bottom: 0.8rem; min-height: 1.3em; }
+
+.tool-drop {
+  position: relative; display: flex; align-items: center; justify-content: center; gap: 0.4rem;
+  padding: 1.2rem; margin-bottom: 0.8rem; cursor: pointer; text-align: center;
+  border: 1px dashed color-mix(in srgb, var(--muted) 70%, transparent);
+  color: var(--fg); font-size: 0.9rem;
+}
+.tool-drop:hover, .tool-drop.over { border-color: var(--accent); color: var(--accent); }
+.tool-drop .go { color: var(--muted); }
+/* The real input: present for a11y and the click/drop target, invisible */
+.tool-drop input { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+
+.tool-filelist { list-style: none; margin-bottom: 0.8rem; }
+.tool-filelist:empty { display: none; }
+.tool-filelist li {
+  display: flex; align-items: center; gap: 0.6rem; padding: 0.3rem 0; font-size: 0.88rem;
+  border-bottom: 1px dotted color-mix(in srgb, var(--muted) 45%, transparent);
+}
+.tool-filelist .name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.tool-filelist .size { color: var(--muted); font-size: 0.82rem; white-space: nowrap; }
+.tool-filelist button { all: unset; cursor: pointer; color: var(--muted); padding: 0 0.3rem; line-height: 1; }
+.tool-filelist button:hover { color: var(--error); }
+
+.tool-actions { display: flex; gap: 0.8rem; margin-bottom: 0.7rem; }
+.tool-actions button {
+  all: unset; cursor: pointer; box-sizing: border-box;
+  padding: 0.5rem 1.2rem; border: 1px solid var(--muted); color: var(--muted); letter-spacing: 0.06em; font-size: 0.85rem;
+}
+.tool-actions button.primary { border-color: var(--accent); color: var(--accent); }
+.tool-actions button:disabled { opacity: 0.35; cursor: default; }
+.tool-actions button:not(:disabled):hover { background: color-mix(in srgb, var(--fg) 12%, transparent); }
+
+.tool-status { font-size: 0.88rem; color: var(--muted); min-height: 1.3em; }
+.tool-status.busy { color: var(--accent); }
+.tool-status.error { color: var(--error); }
+.tool-status a { color: var(--picked); }
 
 .credits {
   padding: 0.7rem 1rem; color: color-mix(in srgb, var(--fg) 75%, transparent); font-size: 0.8rem; text-align: center;
@@ -416,7 +465,6 @@ body.scenery { cursor: pointer; }
   .home .panel { width: min(100%, 24rem); }
   .open-settings { width: min(100%, 24rem); }
   .open-settings .panel { width: 100%; }
-  .intro { max-width: none; }
   .verse-stack figure { padding: 1.2rem 1.2rem 0.9rem; }
 
   .content { padding: 3vh 4vw 11rem; }

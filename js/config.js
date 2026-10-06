@@ -38,5 +38,6 @@ export const config = {
     { id: 'experience', label: 'Experience', subtitle: 'School & work', scene: 'madinah' },
     { id: 'projects', label: 'Projects', subtitle: 'Builds', scene: 'haram-aerial' },
     { id: 'resume', label: 'Resume', subtitle: '& contact', scene: 'night-mosque' },
+    { id: 'tools', label: 'Tools', subtitle: 'Browser utilities', scene: 'farooq-arch' },
   ],
 }
