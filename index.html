@@ -364,6 +364,21 @@
             <span class="name">Video Converter</span>
             <span class="blurb">Convert video files between MP4, MOV, WebM, MKV and AVI, or to a GIF</span>
           </button>
+          <button type="button" class="tool-tile" data-tool="color">
+            <span class="icon">◆</span>
+            <span class="name">Color Converter</span>
+            <span class="blurb">Any CSS color in — hex, rgb(), hsl(), a name — HEX/RGB/HSL out, with copy buttons</span>
+          </button>
+          <button type="button" class="tool-tile" data-tool="qr">
+            <span class="icon">▦</span>
+            <span class="name">QR Code Generator</span>
+            <span class="blurb">Turn any text or link into a downloadable QR code, live as you type</span>
+          </button>
+          <button type="button" class="tool-tile" data-tool="image">
+            <span class="icon">⇄</span>
+            <span class="name">Image Format Converter</span>
+            <span class="blurb">Convert images to PNG, JPEG, WebP or BMP — most formats read in</span>
+          </button>
         </div>
       </div>
 
@@ -431,6 +446,79 @@
           </div>
 
           <p class="tool-status" id="tool-video-status" role="status" aria-live="polite"></p>
+        </article>
+      </div>
+
+      <div class="column tool-view" id="tool-view-color" hidden>
+        <button type="button" class="tool-back">◀ All tools</button>
+
+        <article class="panel card tool" id="tool-color">
+          <header><span class="icon">◆</span>Color Converter</header>
+          <h3>Color Converter</h3>
+          <p>Type any CSS color — a hex code, <code>rgb()</code>, <code>hsl()</code>, or a name like <code>rebeccapurple</code> — or pick one, and get it back in every format.</p>
+
+          <div class="color-input-row">
+            <input type="color" id="tool-color-picker" value="#7aa2f7" aria-label="Pick a color">
+            <input type="text" id="tool-color-text" class="tool-text" placeholder="#7aa2f7, rgb(122 162 247), cornflowerblue…" spellcheck="false" autocapitalize="off" autocomplete="off">
+          </div>
+
+          <ul class="color-results" id="tool-color-results"></ul>
+
+          <p class="tool-status" id="tool-color-status" role="status" aria-live="polite"></p>
+        </article>
+      </div>
+
+      <div class="column tool-view" id="tool-view-qr" hidden>
+        <button type="button" class="tool-back">◀ All tools</button>
+
+        <article class="panel card tool" id="tool-qr">
+          <header><span class="icon">▦</span>QR Code Generator</header>
+          <h3>QR Code Generator</h3>
+          <p>Type a link or any text below — the QR code updates as you type. Generated entirely in your browser.</p>
+
+          <textarea id="tool-qr-text" class="tool-text tool-textarea" rows="3" placeholder="https://example.com" spellcheck="false"></textarea>
+
+          <div class="qr-preview" id="tool-qr-preview" hidden>
+            <canvas id="tool-qr-canvas"></canvas>
+          </div>
+
+          <div class="tool-actions">
+            <button type="button" class="tool-clear" id="tool-qr-clear" disabled>Clear</button>
+            <button type="button" class="primary" id="tool-qr-download" disabled>Download PNG</button>
+          </div>
+
+          <p class="tool-status" id="tool-qr-status" role="status" aria-live="polite"></p>
+        </article>
+      </div>
+
+      <div class="column tool-view" id="tool-view-image" hidden>
+        <button type="button" class="tool-back">◀ All tools</button>
+
+        <article class="panel card tool" id="tool-image">
+          <header><span class="icon">⇄</span>Image Format Converter</header>
+          <h3>Image Format Converter</h3>
+          <p>Convert one or more images to PNG, JPEG, WebP or BMP. Reads in most formats a browser can open (PNG, JPEG, WebP, GIF, BMP, AVIF, SVG and more). Runs entirely in your browser — nothing is uploaded anywhere.</p>
+
+          <div class="tool-modes" role="group" aria-label="Output format">
+            <button type="button" class="tool-mode" data-mode="png" aria-pressed="false">PNG</button>
+            <button type="button" class="tool-mode" data-mode="jpeg" aria-pressed="false">JPEG</button>
+            <button type="button" class="tool-mode" data-mode="webp" aria-pressed="false">WebP</button>
+            <button type="button" class="tool-mode" data-mode="bmp" aria-pressed="false">BMP</button>
+          </div>
+
+          <label class="tool-drop" id="tool-image-drop">
+            <input type="file" id="tool-image-files" accept="image/*" multiple>
+            <span>Choose images <span class="go">or drop them here ▸</span></span>
+          </label>
+
+          <ul class="tool-filelist" id="tool-image-filelist"></ul>
+
+          <div class="tool-actions">
+            <button type="button" class="tool-clear" id="tool-image-clear" disabled>Clear</button>
+            <button type="button" class="primary" id="tool-image-run" disabled>Convert</button>
+          </div>
+
+          <p class="tool-status" id="tool-image-status" role="status" aria-live="polite"></p>
         </article>
       </div>
 

@@ -8,6 +8,22 @@
 const baseName = (name) => name.replace(/\.[^./]+$/, '')
 const humanSize = (n) => (n < 1024 ? `${n} B` : n < 1_048_576 ? `${(n / 1024).toFixed(1)} KB` : `${(n / 1_048_576).toFixed(1)} MB`)
 
+/** Two source files can share a basename (clip.mov + clip.mp4 both → clip.webm) — keep both. */
+function uniqueName(used, name) {
+  if (!used.has(name)) {
+    used.add(name)
+    return name
+  }
+  const dot = name.lastIndexOf('.')
+  const stem = dot === -1 ? name : name.slice(0, dot)
+  const ext = dot === -1 ? '' : name.slice(dot)
+  let n = 2
+  while (used.has(`${stem} (${n})${ext}`)) n++
+  const unique = `${stem} (${n})${ext}`
+  used.add(unique)
+  return unique
+}
+
 // ---------------------------------------------------------------- ffmpeg.wasm, loaded once
 
 let ffmpegPromise
@@ -47,6 +63,7 @@ async function convertVideos(files, targetKey, onProgress) {
   }
   ffmpeg.on('progress', onTick)
   const outputs = []
+  const usedNames = new Set()
   try {
     for (let i = 0; i < files.length; i++) {
       const file = files[i]
@@ -56,7 +73,7 @@ async function convertVideos(files, targetKey, onProgress) {
       await ffmpeg.writeFile(inName, await fetchFile(file))
       await ffmpeg.exec(['-i', inName, ...fmt.args, outName])
       const data = await ffmpeg.readFile(outName)
-      outputs.push({ name: `${baseName(file.name)}.${fmt.ext}`, bytes: data })
+      outputs.push({ name: uniqueName(usedNames, `${baseName(file.name)}.${fmt.ext}`), bytes: data })
       await ffmpeg.deleteFile(inName)
       await ffmpeg.deleteFile(outName)
     }

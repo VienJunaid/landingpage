@@ -9,6 +9,22 @@ const baseName = (name) => name.replace(/\.[^./]+$/, '')
 const humanSize = (n) => (n < 1024 ? `${n} B` : n < 1_048_576 ? `${(n / 1024).toFixed(1)} KB` : `${(n / 1_048_576).toFixed(1)} MB`)
 const yield_ = () => new Promise((r) => setTimeout(r, 0))
 
+/** Two uploaded files can share a basename (two "doc.pdf"s) — keep both instead of one overwriting the other. */
+function uniqueName(used, name) {
+  if (!used.has(name)) {
+    used.add(name)
+    return name
+  }
+  const dot = name.lastIndexOf('.')
+  const stem = dot === -1 ? name : name.slice(0, dot)
+  const ext = dot === -1 ? '' : name.slice(dot)
+  let n = 2
+  while (used.has(`${stem} (${n})${ext}`)) n++
+  const unique = `${stem} (${n})${ext}`
+  used.add(unique)
+  return unique
+}
+
 // ---------------------------------------------------------------- vendored libraries, fetched once
 
 let pdfLibPromise, pdfjsPromise, jsZipPromise
@@ -77,6 +93,7 @@ async function imagesToPdf(files, onProgress) {
 async function pdfToImages(files, onProgress) {
   const pdfjsLib = await importPdfjs()
   const outputs = []
+  const usedNames = new Set()
   for (const file of files) {
     const doc = await pdfjsLib.getDocument({ data: await file.arrayBuffer() }).promise
     const base = baseName(file.name)
@@ -88,7 +105,8 @@ async function pdfToImages(files, onProgress) {
       canvas.width = viewport.width
       canvas.height = viewport.height
       await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise
-      outputs.push({ name: doc.numPages > 1 ? `${base}-p${p}.png` : `${base}.png`, bytes: await canvasToPng(canvas) })
+      const name = uniqueName(usedNames, doc.numPages > 1 ? `${base}-p${p}.png` : `${base}.png`)
+      outputs.push({ name, bytes: await canvasToPng(canvas) })
     }
   }
   if (!outputs.length) throw new Error('No pages found')
@@ -114,6 +132,7 @@ async function splitPdfs(files, onProgress) {
   const { PDFDocument } = await importPdfLib()
   const JSZip = await importJSZip()
   const zip = new JSZip()
+  const usedNames = new Set()
   let count = 0
   for (const file of files) {
     const src = await PDFDocument.load(await file.arrayBuffer())
@@ -122,7 +141,7 @@ async function splitPdfs(files, onProgress) {
       await onProgress(`Splitting ${file.name} — page ${i + 1}/${src.getPageCount()}…`)
       const out = await PDFDocument.create()
       out.addPage((await out.copyPages(src, [i]))[0])
-      zip.file(`${base}-p${i + 1}.pdf`, await out.save())
+      zip.file(uniqueName(usedNames, `${base}-p${i + 1}.pdf`), await out.save())
       count++
     }
   }

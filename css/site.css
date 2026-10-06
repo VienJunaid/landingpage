@@ -363,6 +363,45 @@ html.glass .tool-back { background: color-mix(in srgb, var(--bg) 82%, transparen
 .tool-status.error { color: var(--error); }
 .tool-status a { color: var(--picked); }
 
+/* A plain text field or textarea, same family as .tool-drop */
+.tool-text {
+  all: unset; box-sizing: border-box; display: block; width: 100%;
+  padding: 0.6rem 0.8rem; margin-bottom: 0.8rem; color: var(--fg); font-size: 0.95rem;
+  border: 1px solid color-mix(in srgb, var(--muted) 70%, transparent);
+  background: color-mix(in srgb, var(--bg) 35%, transparent);
+}
+.tool-text::placeholder { color: color-mix(in srgb, var(--fg) 55%, transparent); }
+.tool-text:focus-visible { outline: 1px solid var(--accent); outline-offset: -1px; border-color: var(--accent); }
+.tool-textarea { resize: vertical; font-family: inherit; }
+
+/* Color Converter */
+.color-input-row { display: flex; gap: 0.7rem; margin-bottom: 1rem; }
+.color-input-row input[type="color"] {
+  flex: none; width: 2.9rem; height: 2.9rem; padding: 0; cursor: pointer;
+  border: 1px solid color-mix(in srgb, var(--muted) 70%, transparent); background: none;
+}
+.color-input-row .tool-text { margin-bottom: 0; }
+.color-results { list-style: none; }
+.color-results li {
+  display: flex; align-items: center; gap: 0.7rem; padding: 0.4rem 0; font-size: 0.9rem;
+  border-bottom: 1px dotted color-mix(in srgb, var(--muted) 45%, transparent);
+}
+.color-results .swatch {
+  flex: none; width: 1.3rem; height: 1.3rem;
+  border: 1px solid color-mix(in srgb, var(--muted) 70%, transparent);
+}
+.color-results .name { flex: none; width: 2.6rem; color: var(--muted); letter-spacing: 0.05em; }
+.color-results .value { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.color-results button {
+  all: unset; cursor: pointer; flex: none; padding: 0.25rem 0.6rem; font-size: 0.8rem; color: var(--muted);
+  border: 1px solid color-mix(in srgb, var(--muted) 60%, transparent);
+}
+.color-results button:hover { color: var(--accent); border-color: var(--accent); }
+
+/* QR Code Generator: always true black-on-white, whatever the scene theme, so it keeps scanning */
+.qr-preview { display: flex; justify-content: center; margin-bottom: 1rem; }
+.qr-preview canvas { display: block; background: #fff; padding: 0.8rem; border: 1px solid color-mix(in srgb, var(--muted) 60%, transparent); }
+
 .credits {
   padding: 0.7rem 1rem; color: color-mix(in srgb, var(--fg) 75%, transparent); font-size: 0.8rem; text-align: center;
   background: color-mix(in srgb, var(--panel) 80%, transparent);

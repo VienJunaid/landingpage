@@ -89,9 +89,13 @@ js/prayer-times.js   adhan in the browser           (same shape as /api/prayer/t
 js/tools.js          the Tools page's browse ⇄ tool switch (js/tools-*.js are the tools themselves)
 js/tools-pdf.js      the Tools page's PDF Converter card
 js/tools-video.js    the Tools page's Video Converter card
+js/tools-color.js    the Tools page's Color Converter card (no library: the browser is the parser)
+js/tools-qr.js       the Tools page's QR Code Generator card
+js/tools-image.js    the Tools page's Image Format Converter card
 js/engine/           GENERATED: the dashboard's renderer, scenes and lib helpers, TS → JS
-js/vendor/           adhan (MIT) is GENERATED, synced from the dashboard; pdf-lib, pdf.js, JSZip
-                     and ffmpeg.wasm (for js/tools-*.js) are vendored by hand (see "Adding a tool")
+js/vendor/           adhan (MIT) is GENERATED, synced from the dashboard; pdf-lib, pdf.js, JSZip,
+                     ffmpeg.wasm and qrcode (for js/tools-*.js) are vendored by hand (see
+                     "Adding a tool")
 data/                GENERATED: scenes.json (scenes + themes + backgrounds + characters), verses.json
 fonts/               GENERATED: JetBrains Mono, Amiri Quran (OFL)
 tools/               sync-dashboard.mjs
@@ -136,9 +140,15 @@ tools/               sync-dashboard.mjs
   the file by hand — these libraries aren't part of the dashboard, so `tools/sync-dashboard.mjs`
   doesn't touch them — fetch the package's browser build (e.g. from
   `cdn.jsdelivr.net/npm/<pkg>@<version>/...`) straight into `js/vendor/`, plus its license file as
-  `<name>.LICENSE`, matching how `adhan` is named. Check the license of what you vendor: most of
-  these are MIT, but `@ffmpeg/core` (`js/vendor/ffmpeg/core/`, used by `tools-video.js`) is GPL —
-  that's fine to redistribute as the unmodified compiled build it is, just don't lose the notice.
+  `<name>.LICENSE`, matching how `adhan` is named. If a package has no pre-built browser bundle
+  (check its `dist`/`build` folder on jsdelivr first), `cdn.jsdelivr.net/npm/<pkg>@<version>/+esm`
+  auto-bundles one on the fly — fetch *that* instead of hand-rolling one, same as `qrcode` (for
+  `tools-qr.js`). Check it for bare imports of its own dependencies (e.g. `qrcode` pulls in
+  `dijkstrajs`) — jsdelivr points those at itself too, so vendor each one the same way and rewrite
+  the import path to the local sibling file, or the tool silently depends on jsdelivr at runtime.
+  Check the license of what you vendor: most of these are MIT, but `@ffmpeg/core`
+  (`js/vendor/ffmpeg/core/`, used by `tools-video.js`) is GPL — that's fine to redistribute as the
+  unmodified compiled build it is, just don't lose the notice.
   **Before building a tool that talks to an outside service** (downloads from a site, calls a
   third-party API, …): this is a static GitHub Pages site with no backend and no secrets store, so
   anything needing a server, an API key, or bypassing a site's own access controls (e.g. a

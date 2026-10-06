@@ -10,6 +10,9 @@ import { bigText } from './engine/widgets/clock/digits.js'
 import { initToolsHub } from './tools.js'
 import { initPdfTool } from './tools-pdf.js'
 import { initVideoTool } from './tools-video.js'
+import { initColorTool } from './tools-color.js'
+import { initQrTool } from './tools-qr.js'
+import { initImageTool } from './tools-image.js'
 
 /*
  * The site's App.svelte: the pixel-art scene behind everything, the pages in front of it, and the
@@ -487,6 +490,9 @@ async function boot() {
   resetTools = initToolsHub($('#tools'))
   initPdfTool($('#tool-pdf'))
   initVideoTool($('#tool-video'))
+  initColorTool($('#tool-color'))
+  initQrTool($('#tool-qr'))
+  initImageTool($('#tool-image'))
 
   document.body.classList.add('ready')
 }
