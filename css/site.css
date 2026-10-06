@@ -284,10 +284,34 @@ html.glass .verse-stack figure { background: color-mix(in srgb, var(--bg) 68%, t
 .more { align-self: flex-end; margin-top: 0.8rem; color: var(--accent); font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; }
 .more:hover { text-decoration: underline; }
 
-/* ---------------------------------------------------------------- Tools (PDF Converter and friends) */
+/* ---------------------------------------------------------------- Tools (browse, then one opens) */
 
-/* A tool needs more room than a project blurb: the full row, not half of it */
-.card.tool { grid-column: 1 / -1; }
+/* .column sets its own display, which otherwise beats the default [hidden] { display: none } */
+.tools-browse[hidden], .tool-view[hidden] { display: none; }
+
+.tool-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr)); gap: 1rem; }
+.tool-tile {
+  all: unset; cursor: pointer; box-sizing: border-box;
+  display: flex; flex-direction: column; gap: 0.45rem; padding: 1.3rem 1.3rem 1.1rem;
+  border: 1px solid color-mix(in srgb, var(--muted) 70%, transparent);
+  background: color-mix(in srgb, var(--panel) 90%, transparent);
+  color: var(--fg);
+}
+.tool-tile:hover, .tool-tile:focus-visible { border-color: var(--accent); }
+.tool-tile:focus-visible { outline: 1px solid var(--accent); outline-offset: 2px; }
+.tool-tile .icon { color: var(--accent); font-size: 1.3rem; }
+.tool-tile .name { font-weight: 700; }
+.tool-tile .blurb { color: color-mix(in srgb, var(--fg) 75%, transparent); font-size: 0.85rem; line-height: 1.45; }
+
+.tool-back {
+  all: unset; cursor: pointer; box-sizing: border-box; display: inline-flex; align-items: center; gap: 0.4rem;
+  width: fit-content; margin-bottom: 1.1rem; padding: 0.4rem 0.85rem; color: var(--muted); font-size: 0.85rem; letter-spacing: 0.04em;
+  border: 1px solid color-mix(in srgb, var(--muted) 80%, transparent);
+  background: color-mix(in srgb, var(--bg) 94%, transparent);
+}
+html.glass .tool-back { background: color-mix(in srgb, var(--bg) 82%, transparent); backdrop-filter: blur(2px); }
+.tool-back:hover, .tool-back:focus-visible { color: var(--accent); border-color: var(--accent); }
+
 .tool h3 { margin-bottom: 0.6rem; }
 .tool > p { margin-bottom: 1rem; }
 

@@ -351,9 +351,27 @@
         <h2 id="tools-title">Tools</h2>
         <canvas class="banner" aria-hidden="true"></canvas>
       </header>
-      <div class="column cards">
+      <!-- Browse: pick a tool. Tapping one swaps this out for the tool's own view (js/tools.js). -->
+      <div class="column tools-browse needs-js" id="tools-browse">
+        <div class="tool-grid">
+          <button type="button" class="tool-tile" data-tool="pdf">
+            <span class="icon">⇄</span>
+            <span class="name">PDF Converter</span>
+            <span class="blurb">Images ⇄ PDF, merge PDFs, or split PDFs into a zip of single pages</span>
+          </button>
+          <button type="button" class="tool-tile" data-tool="video">
+            <span class="icon">▶</span>
+            <span class="name">Video Converter</span>
+            <span class="blurb">Convert video files between MP4, MOV, WebM, MKV and AVI, or to a GIF</span>
+          </button>
+        </div>
+      </div>
 
-        <article class="panel card tool needs-js" id="tool-pdf">
+      <!-- One of these per tool, hidden until picked above -->
+      <div class="column tool-view" id="tool-view-pdf" hidden>
+        <button type="button" class="tool-back">◀ All tools</button>
+
+        <article class="panel card tool" id="tool-pdf">
           <header><span class="icon">⇄</span>PDF Converter</header>
           <h3>PDF Converter</h3>
           <p>Convert images to a PDF, a PDF to images, merge several PDFs into one, or split PDFs into single-page files. Runs entirely in your browser — nothing is uploaded anywhere.</p>
@@ -381,8 +399,41 @@
 
           <p class="tool-status" id="tool-pdf-status" role="status" aria-live="polite"></p>
         </article>
-
       </div>
+
+      <div class="column tool-view" id="tool-view-video" hidden>
+        <button type="button" class="tool-back">◀ All tools</button>
+
+        <article class="panel card tool" id="tool-video">
+          <header><span class="icon">▶</span>Video Converter</header>
+          <h3>Video Converter</h3>
+          <p>Convert one or more video files to MP4, WebM, MOV, MKV, AVI, or an animated GIF. Runs entirely in your browser — nothing is uploaded anywhere. The converter itself is about 31 MB and only loads the first time you convert something; after that it's cached. Works best on shorter clips — it's your device doing the encoding, with no server to help.</p>
+
+          <div class="tool-modes" role="group" aria-label="Output format">
+            <button type="button" class="tool-mode" data-mode="mp4" aria-pressed="false">MP4</button>
+            <button type="button" class="tool-mode" data-mode="webm" aria-pressed="false">WebM</button>
+            <button type="button" class="tool-mode" data-mode="mov" aria-pressed="false">MOV</button>
+            <button type="button" class="tool-mode" data-mode="mkv" aria-pressed="false">MKV</button>
+            <button type="button" class="tool-mode" data-mode="avi" aria-pressed="false">AVI</button>
+            <button type="button" class="tool-mode" data-mode="gif" aria-pressed="false">GIF</button>
+          </div>
+
+          <label class="tool-drop" id="tool-video-drop">
+            <input type="file" id="tool-video-files" accept="video/*" multiple>
+            <span>Choose videos <span class="go">or drop them here ▸</span></span>
+          </label>
+
+          <ul class="tool-filelist" id="tool-video-filelist"></ul>
+
+          <div class="tool-actions">
+            <button type="button" class="tool-clear" id="tool-video-clear" disabled>Clear</button>
+            <button type="button" class="primary" id="tool-video-run" disabled>Convert</button>
+          </div>
+
+          <p class="tool-status" id="tool-video-status" role="status" aria-live="polite"></p>
+        </article>
+      </div>
+
     </section>
 
   </main>

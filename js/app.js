@@ -7,7 +7,9 @@ import { currentPeriod, PRAYERS, setPrayerData } from './engine/lib/prayerClock.
 import { applyTheme } from './engine/lib/theme.js'
 import { formatTime, is12h, setHour12 } from './engine/lib/timeFormat.js'
 import { bigText } from './engine/widgets/clock/digits.js'
+import { initToolsHub } from './tools.js'
 import { initPdfTool } from './tools-pdf.js'
+import { initVideoTool } from './tools-video.js'
 
 /*
  * The site's App.svelte: the pixel-art scene behind everything, the pages in front of it, and the
@@ -117,6 +119,7 @@ async function boot() {
   // ---- pages
 
   let stopTitle = () => {}
+  let resetTools = () => {}
   /** (Re)start the pixel title of the page on screen, sized to the room it has. */
   function startTitle() {
     stopTitle()
@@ -135,6 +138,8 @@ async function boot() {
       old.classList.remove('active')
       old.classList.add('leaving')
       setTimeout(() => old.classList.remove('leaving'), 250)
+      // Arriving at Tools always starts at the tile grid, not whatever tool was last open
+      if (pages[i].id === 'tools') resetTools()
     }
     view.page = i
     sections[i].classList.add('active')
@@ -478,8 +483,10 @@ async function boot() {
   // A new day
   setInterval(() => { refreshPrayers(); buildSalah() }, 30 * 60_000)
 
-  // ---- tools (js/tools-pdf.js). Wiring up is cheap; the heavy libraries load lazily on first use.
+  // ---- tools (js/tools.js, js/tools-pdf.js). Wiring up is cheap; heavy libraries load lazily on first use.
+  resetTools = initToolsHub($('#tools'))
   initPdfTool($('#tool-pdf'))
+  initVideoTool($('#tool-video'))
 
   document.body.classList.add('ready')
 }
