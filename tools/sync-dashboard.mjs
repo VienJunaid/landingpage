@@ -25,7 +25,11 @@ const SITE = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const DASH = path.resolve(process.argv[2] ?? path.join(SITE, '../../Work/rpi-dashboard'))
 const SRC = path.join(DASH, 'apps/web/src')
 
-/** Characters that are personal (the couple) stay on the Pi: the public site shows the places only. */
+/**
+ * Characters that are personal (the couple). Pages show the places only, so a scene with the couple
+ * is written twice: the place alone, and the dashboard's own version marked `variantOf` the place.
+ * The site shows `variantOf` scenes in scenery mode only.
+ */
 const PERSONAL = /^(vien|wife|bride|groom)-/
 /** Scene names that differ here (the wedding scene without the couple is just the arch). */
 const RENAME = { 'farooq-wedding': 'farooq-arch' }
@@ -78,19 +82,27 @@ console.log(`engine    ${ENGINE.length} modules → js/engine/`)
 
 const dashboard = await json(path.join(DASH, 'config/dashboard.json'))
 const bundle = { scenes: {}, themes: {}, backgrounds: {}, characters: {} }
+const couple = {}
 
 for (const file of (await readdir(path.join(DASH, 'config/scenes'))).filter((f) => f.endsWith('.json')).sort()) {
   const name = file.replace(/\.json$/, '')
   const scene = await json(path.join(DASH, 'config/scenes', file))
   scene.theme ??= dashboard.theme
-  scene.characters = scene.characters.filter((c) => !PERSONAL.test(c.asset))
-  bundle.scenes[RENAME[name] ?? name] = scene
+  const place = RENAME[name] ?? name
   bundle.themes[scene.theme] ??= await json(path.join(DASH, 'config/themes', `${scene.theme}.json`))
   bundle.backgrounds[scene.background] ??= await json(path.join(DASH, 'assets/backgrounds', `${scene.background}.json`))
   for (const c of scene.characters) {
     bundle.characters[c.asset] ??= await json(path.join(DASH, 'assets/characters', `${c.asset}.json`))
   }
+  bundle.scenes[place] = { ...scene, characters: scene.characters.filter((c) => !PERSONAL.test(c.asset)) }
+  if (scene.characters.some((c) => PERSONAL.test(c.asset))) {
+    // A renamed scene's old name is free for the couple's version; the others get a suffix
+    // `couple` marks the pair, so a narrow screen can keep them side by side (js/scene-view.js)
+    const characters = scene.characters.map((c) => (PERSONAL.test(c.asset) ? { ...c, couple: true } : c))
+    couple[place === name ? `${name}-couple` : name] = { ...scene, characters, variantOf: place }
+  }
 }
+Object.assign(bundle.scenes, couple)
 await write(path.join(SITE, 'data/scenes.json'), JSON.stringify(bundle))
 console.log(`scenes    ${Object.keys(bundle.scenes).join(', ')}`)
 

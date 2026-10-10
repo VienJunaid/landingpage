@@ -55,8 +55,11 @@ One script copies the look across. It writes four things:
    - Each file starts with a line saying where it came from.
 2. **`data/scenes.json`**: every scene in `config/scenes/`, bundled with its theme, background and
    character assets, so the page makes one request instead of forty.
-   - Characters matching `PERSONAL` (`vien-*`, `wife-*`, `bride-*`, `groom-*`) are dropped.
-   - `farooq-wedding` without the couple is renamed `farooq-arch`.
+   - A scene with characters matching `PERSONAL` (`vien-*`, `wife-*`, `bride-*`, `groom-*`) is
+     written twice: the place alone under its own name, and the dashboard's version with the couple
+     as `<name>-couple`, marked `variantOf: <name>`. The couple's entries carry `couple: true`.
+   - `farooq-wedding` without the couple is renamed `farooq-arch`, so the couple's version keeps
+     the name `farooq-wedding`.
 3. **`data/verses.json`**: the dashboard's `verse.featured` list, looked up in `quran.json`. The
    basmala is split off ayah 1 for display, the same way the dashboard's server does it (letters
    compared with the marks stripped). The basmala's letters are taken from Al-Fatiha 1:1 in the data
@@ -150,6 +153,10 @@ the code that changes state calls it.
 - **Scenery mode** adds `body.scenery`, which hides the pages and the dock. Left or right taps, swipes
   and arrow keys step `view.galleryIndex` through every scene, in gallery order: the prayer scenes,
   the pages' scenes, then the rest.
+- **Scenes with the couple** (`variantOf`) are in scenery mode only, each right after its place.
+  `loadScenes` returns `pickable` without them; the picker and `sceneFor` use that list, so a page
+  can never show one. `scene-view.js` `layout()` widens the couple's `x` on screens narrower than
+  16:9 (a phone is a centre crop), so the two figures keep their distance in pixels.
 
 ## Layout and themes
 
@@ -177,4 +184,4 @@ shows the real headings in place of the pixel titles. A print stylesheet does th
 | Sleep mode, System page | They are about the Pi |
 | Hijri and Google calendar cards | The calendar is private; not built |
 | Live reload, importer, Spotify | Server features |
-| The couple's characters | Kept off the public site (see `PERSONAL` in the sync script) |
+| The couple on the pages | Their scenes are in scenery mode only (see `PERSONAL` in the sync script) |

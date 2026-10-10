@@ -24,6 +24,9 @@ inside it.
 - **Dock** (bottom middle, every page): the page links, and **▣ Background** to change that page's
   scene.
 - **Scenery mode:** only the art. Tap left or right to browse every scene; a faint ✕ returns.
+  It also has the scenes **with the couple** in them, each right after its place: `farooq-wedding`
+  (the wedding portrait at the Al-Farooq arch) and `aqsa-fajr-couple`, `kaaba-dhuhr-couple`,
+  `sophia-asr-couple`, `madinah-maghrib-couple`, `farooq-isha-couple`, `kazakh-meadow-couple`.
 
 | Page | Default scene |
 |---|---|
@@ -42,9 +45,11 @@ Also available in the picker and scenery mode: `aqsa-sunset`.
   global "hints only" memory, which applies to the user's coursework.
 - **Match the dashboard.** When a style or behavior exists there, copy it rather than inventing one.
   CSS taken from its Svelte components is marked "dashboard" in `css/site.css`.
-- **The couple's characters stay off the public site** (`vien-*`, `wife-*`, `bride-*`, `groom-*`).
-  The sync script filters them (`PERSONAL`). This was Claude's default, following the dashboard's rule
-  that personal images stay out of public screenshots; ask before changing it.
+- **The couple's characters are in scenery mode only** (`vien-*`, `wife-*`, `bride-*`, `groom-*`).
+  The owner chose this on 2026-10-10: every scene with the couple is synced as a separate scene
+  (`variantOf` its place), shown in scenery mode and kept out of the ▣ Background picker, because
+  page text would cover them. Pages and the home page show the places only; ask before changing
+  that.
 - **Faces are always plain** on any character, as in the dashboard.
 - **Never type Quran text by hand.** Verses come from `data/verses.json`, which the sync script builds
   from the dashboard's `quran.json` (Tanzil, unmodified). The verse list is the dashboard's curated
@@ -121,6 +126,7 @@ tools/               sync-dashboard.mjs
 - **Adding a page, or an entry/card within one:** see the **add-page** skill
   (`.claude/skills/add-page/`) for the full recipe and templates.
 - **Adding a scene:** build it in the dashboard, then sync. It appears in the picker automatically.
+  If it has the couple in it, the sync also writes `<name>-couple` for scenery mode.
 - **Class names:** `.label` belongs to Settings rows. Don't reuse it elsewhere (see Gotchas).
 - **Adding a tool to the Tools page**, or extending an existing one: see the **add-tool** skill
   (`.claude/skills/add-tool/`) for the full recipe, the CSS classes to reuse, vendoring a library,
@@ -152,7 +158,7 @@ tools/               sync-dashboard.mjs
 
 ## Ideas not built yet
 
-- The couple's pixel art on the home scenes (owner's call)
+- The couple's pixel art on the home scenes (owner's call; they are in scenery mode already)
 - Hijri and personal-calendar cards on the Projects (Haram) page, as on the dashboard
 - A "prayer just started" banner in Arabic, as on the dashboard
 - Pixelated versions of the project images

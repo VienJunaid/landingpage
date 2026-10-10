@@ -18,7 +18,7 @@ It needs a server (not `file://`), because the scripts are ES modules.
 |---|---|
 | `/?prayer=maghrib` | The home page in that prayer's scene (`fajr`, `dhuhr`, `asr`, `maghrib`, `isha`) |
 | `/?prayer=fajr&dawn=0.3` | The Fajr sky at a point in the sunrise |
-| `/?scene=kazakh-meadow` | Scenery mode on any scene |
+| `/?scene=farooq-wedding` | Scenery mode on any scene |
 | `/?debug` | Renderer, grid size, FPS and ms per frame |
 
 ## Where things are
@@ -53,8 +53,9 @@ node tools/sync-dashboard.mjs                      # looks in ../../Work/rpi-das
 node tools/sync-dashboard.mjs path/to/rpi-dashboard
 ```
 
-The sync leaves the couple's characters out (`vien-*`, `wife-*`, `bride-*`, `groom-*`), so the public
-site shows the places only. That list is `PERSONAL` at the top of the script.
+The pages show the places only. Scenes with the couple in them (`vien-*`, `wife-*`, `bride-*`,
+`groom-*`, the `PERSONAL` list at the top of the script) are synced as separate scenes that appear in
+scenery mode only: `farooq-wedding` and `<name>-couple`.
 
 Visitors' settings (24-hour time, verse on/off, glass blur, chosen backgrounds) are saved in their own
 browser and never change the site for anyone else.

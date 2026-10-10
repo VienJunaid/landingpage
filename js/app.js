@@ -54,10 +54,19 @@ let period // the prayer period it really is, in config.prayer's place
 
 // ---------------------------------------------------------------- scenes
 
-/** Every scene, in gallery order: the prayer scenes, then the pages' scenes, then the rest. */
+/**
+ * Every scene, in gallery order: the prayer scenes, then the pages' scenes, then the rest. A scene
+ * with the couple in it (`variantOf` a place) comes right after its place; those are for scenery
+ * mode only, so `pickable` leaves them out.
+ */
 function loadScenes(bundle) {
   const names = []
-  const want = (name) => { if (bundle.scenes[name] && !names.includes(name)) names.push(name) }
+  const variants = Object.keys(bundle.scenes).filter((name) => bundle.scenes[name].variantOf)
+  const want = (name) => {
+    if (!bundle.scenes[name] || names.includes(name)) return
+    names.push(name)
+    variants.filter((v) => bundle.scenes[v].variantOf === name).forEach(want)
+  }
   for (const p of pages) for (const name of p.sceneByPrayer ? PRAYERS.map((x) => p.sceneByPrayer[x]) : [p.scene]) want(name)
   Object.keys(bundle.scenes).forEach(want)
   const loaded = names.map((name) => {
@@ -71,7 +80,7 @@ function loadScenes(bundle) {
       },
     }
   })
-  return { names, loaded }
+  return { names, loaded, pickable: names.filter((name) => !variants.includes(name)) }
 }
 
 const WORDS = { aqsa: 'Al-Aqsa', farooq: 'Al-Farooq', sophia: 'Hagia Sophia' }
@@ -85,7 +94,7 @@ async function boot() {
   // The canvas atlas needs the monospace font loaded before it draws glyphs
   await document.fonts.load('16px "JetBrains Mono"').catch(() => {})
 
-  const { names, loaded } = loadScenes(bundle)
+  const { names, loaded, pickable } = loadScenes(bundle)
   const index = (name) => Math.max(0, names.indexOf(name))
 
   // Today's times in config.prayer's place (the same shape as the dashboard's /api/prayer/today)
@@ -102,7 +111,7 @@ async function boot() {
     const pc = pages[p]
     const pick = view.picking === p ? view.preview : prefs.backgrounds[pc.id]
     // On the home page, a prayer tapped in the Salah box still previews that prayer's scene
-    if (pick && names.includes(pick) && !(view.selected && pc.sceneByPrayer)) return index(pick)
+    if (pick && pickable.includes(pick) && !(view.selected && pc.sceneByPrayer)) return index(pick)
     if (pc.sceneByPrayer) return index(pc.sceneByPrayer[view.selected ?? period?.prayer ?? 'isha'])
     return index(pc.scene)
   }
@@ -401,7 +410,7 @@ async function boot() {
 
     sheet.append(
       option(null, pc.sceneByPrayer ? 'Follow prayer times' : `Default · ${pretty(pc.scene)}`, true),
-      el('div', { className: 'grid' }, ...names.map((name) => option(name, pretty(name)))),
+      el('div', { className: 'grid' }, ...pickable.map((name) => option(name, pretty(name)))),
       el('div', { className: 'actions' }, cancel, save),
     )
     paint()

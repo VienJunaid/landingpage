@@ -37,6 +37,11 @@ export function createSceneView(canvas, config, pages) {
     const cols = Math.ceil((window.innerWidth * dpr) / cw)
     const rows = Math.ceil((window.innerHeight * dpr) / ch)
     if (cols === out.cols && rows === out.rows) return
+    // The couple are placed for a 16:9 screen. A narrower one is a centre crop of that, so keep
+    // their distance in pixels instead of letting the two figures slide into each other.
+    const spread = Math.max(1, (targetRows * (16 / 9) * (cellHeight / cellWidth)) / cols)
+    for (const p of pages)
+      for (const c of p.scene.characters) if (c.couple) c.x = 0.5 + ((c.homeX ??= c.x) - 0.5) * spread
     grids = pages.map(() => new Grid(cols, rows))
     out = new Grid(cols, rows)
     renderer.resize(cols, rows, cw, ch)
