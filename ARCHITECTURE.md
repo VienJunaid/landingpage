@@ -47,7 +47,7 @@ time (verses, scene bundles), or left out (Quran player, calendar, system page).
 
 One script copies the look across. It writes four things:
 
-1. **`js/engine/`**: 26 TypeScript modules from `apps/web/src` (`renderer/`, `scene/`,
+1. **`js/engine/`**: 27 TypeScript modules from `apps/web/src` (`renderer/`, `scene/`,
    `scene/backgrounds/`, and `lib/` color, theme, prayerClock, timeFormat, hijri, plus the clock's
    block digits), transpiled to ES2022 modules.
    - Import paths get real file names, since browsers don't guess: `'./grid'` → `'./grid.js'`,
@@ -55,11 +55,14 @@ One script copies the look across. It writes four things:
    - Each file starts with a line saying where it came from.
 2. **`data/scenes.json`**: every scene in `config/scenes/`, bundled with its theme, background and
    character assets, so the page makes one request instead of forty.
-   - A scene with characters matching `PERSONAL` (`vien-*`, `wife-*`, `bride-*`, `groom-*`) is
+   - A scene with characters matching `PERSONAL` (`vien-*`, `wife-*`, `bride-*`, `groom-*`,
+     `rider-*`) is
      written twice: the place alone under its own name, and the dashboard's version with the couple
      as `<name>-couple`, marked `variantOf: <name>`. The couple's entries carry `couple: true`.
    - `farooq-wedding` without the couple is renamed `farooq-arch`, so the couple's version keeps
      the name `farooq-wedding`.
+   - The `journey` scene draws its riders itself, from `rider-*` assets its scene lists as `hidden`.
+     Leaving those out gives `journey` (the road and the places); `journey-couple` has the riders.
 3. **`data/verses.json`**: the dashboard's `verse.featured` list, looked up in `quran.json`. The
    basmala is split off ayah 1 for display, the same way the dashboard's server does it (letters
    compared with the marks stripped). The basmala's letters are taken from Al-Fatiha 1:1 in the data
@@ -153,6 +156,10 @@ the code that changes state calls it.
 - **Scenery mode** adds `body.scenery`, which hides the pages and the dock. Left or right taps, swipes
   and arrow keys step `view.galleryIndex` through every scene, in gallery order: the prayer scenes,
   the pages' scenes, then the rest.
+- **The Horse journey row** in Settings has two buttons. "scenery" calls `setScenery(true,
+  'journey-couple')`, which starts the gallery on that scene. "as home" saves
+  `prefs.backgrounds.home = 'journey-couple'`; `sceneFor` accepts that one couple scene for the home
+  page only. "home ✓" deletes it again.
 - **Scenes with the couple** (`variantOf`) are in scenery mode only, each right after its place.
   `loadScenes` returns `pickable` without them; the picker and `sceneFor` use that list, so a page
   can never show one. `scene-view.js` `layout()` widens the couple's `x` on screens narrower than

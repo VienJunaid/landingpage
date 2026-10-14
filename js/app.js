@@ -83,9 +83,16 @@ function loadScenes(bundle) {
   return { names, loaded, pickable: names.filter((name) => !variants.includes(name)) }
 }
 
+/**
+ * The horse journey with the riders in it (the dashboard's `journey` scene; `journey` here is the same
+ * road without them). Like every scene with the couple it is for scenery mode, with one exception the
+ * owner asked for: Settings → Horse journey can make it the home background.
+ */
+const JOURNEY = 'journey-couple'
+
 const WORDS = { aqsa: 'Al-Aqsa', farooq: 'Al-Farooq', sophia: 'Hagia Sophia' }
 /** "aqsa-fajr" → "Al-Aqsa Fajr" */
-const pretty = (name) => name.split('-').map((w) => WORDS[w] ?? w.charAt(0).toUpperCase() + w.slice(1)).join(' ')
+const pretty = (name) => (name === JOURNEY ? 'Horse journey' : name.split('-').map((w) => WORDS[w] ?? w.charAt(0).toUpperCase() + w.slice(1)).join(' '))
 
 // ---------------------------------------------------------------- start
 
@@ -111,7 +118,8 @@ async function boot() {
     const pc = pages[p]
     const pick = view.picking === p ? view.preview : prefs.backgrounds[pc.id]
     // On the home page, a prayer tapped in the Salah box still previews that prayer's scene
-    if (pick && pickable.includes(pick) && !(view.selected && pc.sceneByPrayer)) return index(pick)
+    const allowed = pickable.includes(pick) || (pick === JOURNEY && pc.id === 'home' && names.includes(JOURNEY))
+    if (pick && allowed && !(view.selected && pc.sceneByPrayer)) return index(pick)
     if (pc.sceneByPrayer) return index(pc.sceneByPrayer[view.selected ?? period?.prayer ?? 'isha'])
     return index(pc.scene)
   }
@@ -345,12 +353,45 @@ async function boot() {
       return row
     }
 
+    // Horse journey (dashboard: Settings.svelte): on its own in scenery mode, or as the home background
+    // with the clock, Salah and verse still showing. "home ✓" goes back to following the prayer times.
+    const journeyRow = () => {
+      const home = el('button', { type: 'button' })
+      const paintHome = () => {
+        const on = prefs.backgrounds.home === JOURNEY
+        home.textContent = on ? 'home ✓' : 'as home ▸'
+        home.classList.toggle('on', on)
+      }
+      home.onclick = () => {
+        if (prefs.backgrounds.home === JOURNEY) delete prefs.backgrounds.home
+        else prefs.backgrounds.home = JOURNEY
+        savePrefs()
+        closeSheet()
+        if (view.scenery) setScenery(false)
+        view.selected = null
+        paintSalah()
+        if (view.page !== 0) location.hash = `#${pages[0].id}`
+        else refresh(1)
+      }
+      const scenery = el('button', { type: 'button', onclick: () => {
+        closeSheet()
+        setScenery(true, JOURNEY)
+      } }, 'scenery ▸')
+      paintHome()
+      return el('div', { className: 'row' },
+        el('span', { className: 'label' }, el('b', {}, 'Horse journey'),
+          el('small', {}, 'The couple ride from Al-Aqsa to Makkah, Madinah and Istanbul. On its own, or as the home screen with the clock, Salah and verse still showing.')),
+        el('span', { className: 'choices' }, scenery, home),
+      )
+    }
+
     const homeNow = prefs.backgrounds.home ? pretty(prefs.backgrounds.home) : 'Follow prayer times'
     sheet.append(
       action('Scenery mode', 'Only the pixel art. Tap right or left to browse every scene; ✕ at the bottom to return.', 'enter', () => {
         closeSheet()
         setScenery(true)
       }),
+      ...(names.includes(JOURNEY) ? [journeyRow()] : []),
       action('Home background', `Now: ${homeNow}. Pick any scene, or follow the prayer times.`, 'change', () => pickBackground(0)),
       toggle('24-hour time', '16:30 instead of 4:30 PM, on the clock and the Salah times.', 'hour24', () => {
         setHour12(!prefs.hour24)
@@ -420,10 +461,10 @@ async function boot() {
   // ---- scenery mode: only the art, and one faint ✕ to come back
 
   const exit = el('button', { className: 'exit-scenery', ariaLabel: 'Exit scenery mode', onclick: () => setScenery(false) }, '✕')
-  function setScenery(on) {
+  function setScenery(on, start) {
     if (on === view.scenery) return
-    // Start from whatever is on screen
-    if (on) view.galleryIndex = sceneFor(view.page)
+    // Start from whatever is on screen, or from the scene asked for (Settings → Horse journey)
+    if (on) view.galleryIndex = start && names.includes(start) ? index(start) : sceneFor(view.page)
     view.scenery = on
     view.selected = null
     document.body.classList.toggle('scenery', on)

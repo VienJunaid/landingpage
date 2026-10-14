@@ -3,6 +3,7 @@ import { farooq } from './farooq.js';
 import { farooqNight } from './farooqNight.js';
 import { frames } from './frames.js';
 import { haram } from './haram.js';
+import { journey } from './journey.js';
 import { kaaba } from './kaaba.js';
 import { madinah } from './madinah.js';
 import { meadow } from './meadow.js';
@@ -20,9 +21,11 @@ const EFFECTS = {
     farooq,
     farooqNight,
     meadow,
+    journey,
     none: () => ({ draw() { } }),
 };
-export function createBackground(ctx, asset) {
+/** `characters` are the scene's loaded character assets, for effects that draw them themselves (journey). */
+export function createBackground(ctx, asset, characters) {
     if (!asset)
         return EFFECTS.none(ctx, {});
     if (asset.type === 'frames')
@@ -32,5 +35,5 @@ export function createBackground(ctx, asset) {
         console.warn(`Unknown background effect "${asset.effect}"`);
         return EFFECTS.none(ctx, {});
     }
-    return effect(ctx, asset.params ?? {});
+    return effect(ctx, asset.params ?? {}, characters);
 }

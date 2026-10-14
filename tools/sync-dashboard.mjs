@@ -29,8 +29,10 @@ const SRC = path.join(DASH, 'apps/web/src')
  * Characters that are personal (the couple). Pages show the places only, so a scene with the couple
  * is written twice: the place alone, and the dashboard's own version marked `variantOf` the place.
  * The site shows `variantOf` scenes in scenery mode only.
+ * `rider-*` are the couple on horseback in the journey scene: its background draws them itself, so
+ * leaving them out of `journey` leaves the road and the places, and `journey-couple` has the riders.
  */
-const PERSONAL = /^(vien|wife|bride|groom)-/
+const PERSONAL = /^(vien|wife|bride|groom|rider)-/
 /** Scene names that differ here (the wedding scene without the couple is just the arch). */
 const RENAME = { 'farooq-wedding': 'farooq-arch' }
 

@@ -14,8 +14,10 @@ shared = { glyphs: new GlyphSet(), palette: new Palette(theme.background) }) {
     const ctx = { ...shared, theme };
     const bg = ctx.palette.id(theme.background);
     const pixels = new PixelLayer(ctx.glyphs);
-    const background = createBackground(ctx, assets.background);
+    const background = createBackground(ctx, assets.background, assets.characters);
     const sprites = scene.characters.flatMap((cfg) => {
+        if (cfg.hidden)
+            return []; // loaded for the background effect to draw itself
         const asset = assets.characters.get(cfg.asset);
         if (!asset) {
             console.warn(`Character "${cfg.asset}" not found in assets/characters/`);

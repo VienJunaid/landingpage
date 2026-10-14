@@ -14,8 +14,8 @@ inside it.
 - **Home:** the scene **follows the prayer times** (Atlanta). On top: the clock with the Hijri date,
   a rotating Quran verse, "VIEN TRAN" assembling in pixels, the Salah box, and a small intro card.
   - Tap a prayer in the Salah box to preview its scene (yellow ◀ = live, light blue ◆ = picked).
-  - Tap the clock for **Settings**: scenery mode, home background, 24-hour time, verse on/off, glass
-    blur.
+  - Tap the clock for **Settings**: scenery mode, the **horse journey** (on its own, or as the home
+    background), home background, 24-hour time, verse on/off, glass blur.
   - Tap the verse for another verse.
 - **About, Experience, Projects, Resume:** boxes of text over one scene each, with a pixel title.
 - **Tools:** a browser of working browser tools, over one scene. Tap a tile to open that tool (a box
@@ -26,7 +26,15 @@ inside it.
 - **Scenery mode:** only the art. Tap left or right to browse every scene; a faint ✕ returns.
   It also has the scenes **with the couple** in them, each right after its place: `farooq-wedding`
   (the wedding portrait at the Al-Farooq arch) and `aqsa-fajr-couple`, `kaaba-dhuhr-couple`,
-  `sophia-asr-couple`, `madinah-maghrib-couple`, `farooq-isha-couple`, `kazakh-meadow-couple`.
+  `sophia-asr-couple`, `madinah-maghrib-couple`, `farooq-isha-couple`, `kazakh-meadow-couple`, and
+  `journey-couple` (the horse journey, below).
+- **Horse journey** (the dashboard's `journey` scene): the couple ride in the bottom-left corner while
+  the world scrolls right to left through Al-Aqsa (dawn), Makkah (noon), Madinah (sunset) and Istanbul
+  (night), 30 s each. Here it is two scenes: `journey` is the road and the places without the riders
+  (in the ▣ Background picker like any place), and `journey-couple` has the riders. The Settings row
+  **Horse journey** has two buttons, as on the dashboard: **scenery ▸** opens scenery mode on
+  `journey-couple`; **as home ▸** makes `journey-couple` the visitor's home background, with the
+  clock, verse, name and Salah box still on top (**home ✓** undoes it).
 
 | Page | Default scene |
 |---|---|
@@ -37,7 +45,7 @@ inside it.
 | Resume | `night-mosque` |
 | Tools | `farooq-arch` |
 
-Also available in the picker and scenery mode: `aqsa-sunset`.
+Also available in the picker and scenery mode: `aqsa-sunset`, `journey`.
 
 ## Owner preferences (follow these)
 
@@ -50,6 +58,11 @@ Also available in the picker and scenery mode: `aqsa-sunset`.
   (`variantOf` its place), shown in scenery mode and kept out of the ▣ Background picker, because
   page text would cover them. Pages and the home page show the places only; ask before changing
   that.
+  - **One exception, asked for on 2026-10-13:** the horse journey with the riders
+    (`journey-couple`) can be the **home** background, but only through Settings → Horse journey →
+    "as home". It is still not in the ▣ Background picker, and no other page can show it
+    (`sceneFor` in `js/app.js` allows it for the home page alone). The riders' assets are
+    `rider-*`, in the sync script's `PERSONAL` list.
 - **Faces are always plain** on any character, as in the dashboard.
 - **Never type Quran text by hand.** Verses come from `data/verses.json`, which the sync script builds
   from the dashboard's `quran.json` (Tanzil, unmodified). The verse list is the dashboard's curated
@@ -152,6 +165,15 @@ tools/               sync-dashboard.mjs
 - **Testing a change:** see the **test-in-browser** skill (`.claude/skills/test-in-browser/`) —
   this project has no test suite, so that skill *is* the testing process. Headless runs at ~14 fps
   (software rendering); CPU per frame is about 0.2 ms.
+- **The journey costs more than the other scenes.** It redraws its sky, hills and ground in full
+  every frame: about two to three times the per-frame cost of `kazakh-meadow` in the same headless
+  test. It only runs when a visitor picks it. On an upright phone the screen is a narrow centre crop,
+  so the horses run off both edges; the scene keeps both riders in view (`journey.ts`, the two
+  `rider(...)` calls), and on the phone home page the boxes cover most of them.
+- **`startLoop` returns `{ stop, setPaused }`**, not a bare stop function (the dashboard changed
+  it). `scene-view.js` calls `loop.stop()`.
+- **Don't pipe the sync script into `head`.** It deletes and rewrites `js/engine/` and then prints;
+  a closed pipe kills it part-way. Let it run to the end.
 - **Old template leftovers:** `assets/`, `Elements.txt` and `LICENSE.txt` are from the previous
   HTML5 UP template and are unused. They are the owner's to delete. A copy of the old page is at
   `/Users/vien/Documents/LandingPage/index.old.html`.

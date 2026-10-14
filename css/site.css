@@ -485,6 +485,11 @@ button.bg-box:hover, button.bg-box:active { border-color: var(--accent); }
 .label b { color: var(--fg); font-weight: 600; }
 .label small { color: color-mix(in srgb, var(--fg) 60%, var(--muted)); font-size: 0.78rem; line-height: 1.3; }
 .row .go { color: var(--accent); letter-spacing: 0.08em; white-space: nowrap; }
+/* A row with two choices instead of one action (dashboard: the Horse journey row) */
+.row .choices { display: flex; flex-direction: column; gap: 0.3rem; flex: none; }
+.sheet .choices button { text-align: center; white-space: nowrap; padding: 0.2rem 0.6rem; border: 1px solid var(--muted); color: var(--accent); letter-spacing: 0.06em; }
+.sheet .choices button:hover { border-color: color-mix(in srgb, var(--accent) 60%, transparent); }
+.sheet .choices button.on { border-color: var(--picked); color: var(--picked); }
 /* Pixel-style switch */
 .switch { width: 2.6rem; height: 1.2rem; border: 1px solid var(--muted); display: flex; padding: 2px; flex: none; }
 .switch span { width: 50%; height: 100%; background: var(--muted); transition: transform 0.15s steps(3); }

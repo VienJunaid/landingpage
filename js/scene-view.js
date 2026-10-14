@@ -81,7 +81,7 @@ export function createSceneView(canvas, config, pages) {
   }
 
   let frames = 0, cpu = 0, lastStat = performance.now()
-  const stop = startLoop(still ? 4 : config.fps || 20, (t) => {
+  const loop = startLoop(still ? 4 : config.fps || 20, (t) => {
     const start = performance.now()
     const cur = nav.page
     let target = grids[cur]
@@ -119,7 +119,7 @@ export function createSceneView(canvas, config, pages) {
       nav.start = wipe && !still ? performance.now() : -1
     },
     destroy() {
-      stop()
+      loop.stop()
       clearTimeout(resizing)
       window.removeEventListener('resize', onResize)
       renderer.destroy()

@@ -54,8 +54,10 @@ node tools/sync-dashboard.mjs path/to/rpi-dashboard
 ```
 
 The pages show the places only. Scenes with the couple in them (`vien-*`, `wife-*`, `bride-*`,
-`groom-*`, the `PERSONAL` list at the top of the script) are synced as separate scenes that appear in
-scenery mode only: `farooq-wedding` and `<name>-couple`.
+`groom-*`, `rider-*`, the `PERSONAL` list at the top of the script) are synced as separate scenes that
+appear in scenery mode only: `farooq-wedding` and `<name>-couple`. The one exception is the horse
+journey: Settings → Horse journey can open `journey-couple` in scenery mode or make it the home
+background.
 
 Visitors' settings (24-hour time, verse on/off, glass blur, chosen backgrounds) are saved in their own
 browser and never change the site for anyone else.
